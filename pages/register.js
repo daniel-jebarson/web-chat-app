@@ -12,15 +12,17 @@ import {
   Link,
   Avatar,
   FormControl,
-  FormHelperText,
   InputRightElement,
+  Icon,
 } from "@chakra-ui/react";
-
+import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 
-const Home = () => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
+  const handleShowCClick = () => setShowCPassword(!showCPassword);
 
   return (
     <Flex
@@ -62,6 +64,15 @@ const Home = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
+                    children={<Icon as={FaRegUser} color="gray.500" />}
+                  />
+                  <Input type="text" placeholder="Username" />
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
                     color="gray.500"
                     children={<LockIcon color="gray.500" />}
                   />
@@ -79,10 +90,30 @@ const Home = () => {
                     />
                   </InputRightElement>
                 </InputGroup>
-                <FormHelperText textAlign="right">
-                  <Link>forgot password?</Link>
-                </FormHelperText>
               </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    color="gray.500"
+                    children={<LockIcon color="gray.500" />}
+                  />
+                  <Input
+                    type={showCPassword ? "text" : "password"}
+                    placeholder="Confirm Password"
+                  />
+                  <InputRightElement width="3.5rem">
+                    <IconButton
+                      h="1.75rem"
+                      size="sm"
+                      aria-label="ViewMode Changer"
+                      icon={showCPassword ? <ViewOffIcon /> : <ViewIcon />}
+                      onClick={handleShowCClick}
+                    />
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+
               <Button
                 borderRadius={0}
                 type="submit"
@@ -90,20 +121,20 @@ const Home = () => {
                 colorScheme="teal"
                 width="full"
               >
-                Login
+                Register
               </Button>
             </Stack>
           </form>
         </Box>
       </Stack>
       <Box>
-        Register here?{" "}
-        <Link color="teal.500" href="/register">
-          Sign Up
+        Already have an account?{" "}
+        <Link color="teal.500" href="/">
+          Sign In
         </Link>
       </Box>
     </Flex>
   );
 };
 
-export default Home;
+export default Register;
