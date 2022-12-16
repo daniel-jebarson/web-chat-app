@@ -2,16 +2,20 @@ const app = require("express")();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://example.com",
+    origin: "*",
     methods: ["GET", "POST", "PUT"],
   },
 });
-io.on("connection", () => {
+io.on("connection", (socket) => {
   console.log("Connection made");
+  socket.on("sample", (data) => {
+    console.log(`Fromm server :${JSON.stringify(data)}`);
+    io.emit("sample1", "This is server");
+  });
 });
 
 app.get("/", (req, res) => {
-  res.send("hello there!");
+  res.send("hello");
 });
 
 server.listen(5000, () => {
