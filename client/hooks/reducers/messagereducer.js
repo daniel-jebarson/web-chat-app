@@ -1,9 +1,11 @@
-import {actionType} from "../action-types/actiontypes"
+import { actionType } from "../action-types/actiontypes";
 
-const messagereducer = (state, action) => {
+// const messagereducer = (state, action) => {
 
-    switch(action.type){
-        case actionType.
-    }
+//     switch(action.type){
 
-};
+//         case actionType.
+
+//     }
+
+// };

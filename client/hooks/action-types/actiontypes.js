@@ -1,6 +1,4 @@
-export default ActionType = () => {
-  return {
-    SEND_MESSAGE: "SEND_MESSAGE",
-    DELETE_MESSAGE: "DELETE_MESSAGE",
-  };
+export default {
+  ADD_FRIEND: "ADD_FRIEND",
+  REMOVE_FRIEND: "REMOVE_FRIEND",
 };

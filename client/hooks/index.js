@@ -1,3 +1,3 @@
 export * as actionCreators from "./action-creators";
-export * from "./store/store";
-export * from "./reducers/reducer";
+export * from "./store/index";
+export * from "./reducers/index";

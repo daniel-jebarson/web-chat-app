@@ -1,20 +1,13 @@
-import { TYPE } from "../action-types/actiontypes";
-// import { Dispatch } from "redux";
+import { addFriend, removeFriend } from "../actions/friend";
 
-export const SENDMESSAGE = (desc) => {
+export const ADDFRIEND = (friend) => {
   return (dispatch) => {
-    dispatch({
-      type: TYPE.SEND_MESSAGE,
-      description: desc,
-    });
+    dispatch(addFriend(friend));
   };
 };
 
-export const DELETEMESSAGE = (x) => {
+export const REMOVEFRIEND = (friend) => {
   return (dispatch) => {
-    dispatch({
-      type: TYPE.DELETE_MESSAGE,
-      index: x,
-    });
+    dispatch(removeFriend(friend));
   };
 };
