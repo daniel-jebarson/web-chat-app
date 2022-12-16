@@ -1,5 +1,5 @@
 import actiontypes from "../action-types/actiontypes";
-const friendReducer = (friends = [], action) => {
+export function friendReducer(friends = [], action) {
   switch (action.type) {
     case actiontypes.ADD_FRIEND:
       return [...friends, action.friend];
@@ -8,5 +8,5 @@ const friendReducer = (friends = [], action) => {
     default:
       return friends;
   }
-};
-export default friendReducer;
+}
+// export default friendReducer;

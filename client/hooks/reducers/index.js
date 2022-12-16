@@ -1,6 +1,8 @@
 import { friendReducer } from "./friend";
 import { combineReducers } from "redux";
-export default combineReducers({
+const Reducers = combineReducers({
   friends: friendReducer,
   //   messages: messageReducer,
 });
+
+export default Reducers;
