@@ -8,7 +8,7 @@ function App({ Component, pageProps }) {
   // 2. Wrap ChakraProvider at the root of your app
   return (
     <Provider store={store}>
-      <ChakraProvider>
+      <ChakraProvider resetCSS>
         <Component {...pageProps} />
       </ChakraProvider>
     </Provider>
