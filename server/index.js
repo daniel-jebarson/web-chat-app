@@ -7,10 +7,10 @@ const io = require("socket.io")(server, {
   },
 });
 io.on("connection", (socket) => {
-  console.log("Connection made");
-  socket.on("sample", (data) => {
-    console.log(`Fromm server :${JSON.stringify(data)}`);
-    io.emit("sample1", "This is server");
+  console.log("Connection made " + socket.id);
+  socket.on("send_message", (data) => {
+    console.log(`Sent fromm client to server :${JSON.stringify(data)}`);
+    io.emit("receive_message", `Server sent ${JSON.stringify(data)}`);
   });
 });
 

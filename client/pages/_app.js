@@ -9,9 +9,7 @@ function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        <React.StrictMode>
-          <Component {...pageProps} />
-        </React.StrictMode>
+        <Component {...pageProps} />
       </ChakraProvider>
     </Provider>
   );

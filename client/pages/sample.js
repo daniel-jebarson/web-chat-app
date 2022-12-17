@@ -6,25 +6,29 @@ import { Container } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 
+const socket = io("http://localhost:5000/", {
+  transports: ["websocket"],
+});
+
 export default function Sample() {
   const dispatch = useDispatch();
-  const socket = io("http://localhost:5000/", {
-    transports: ["websocket"],
-  });
   const [val, setVal] = useState("");
 
   const { ADDFRIEND, REMOVEFRIEND } = bindActionCreators(
     actionCreators,
     dispatch
   );
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
   const state = useSelector((state) => state.friends);
   const handlePost = (val) => {
-    socket.emit("sample", { post: val });
+    socket.emit("send_message", { post: val });
   };
 
-  socket.on("sample1", (data) => {
-    console.log(`This is client : ${data}`);
-  });
+  socket;
   return (
     <Container>
       {" "}
