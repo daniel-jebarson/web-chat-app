@@ -7,12 +7,13 @@ import {
   IconButton,
   Icon,
 } from "@chakra-ui/react";
+import Navbar from "../components/Navbar";
 import FriendCard from "../components/FriendCard";
 import { SunIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
 function Chat() {
   return (
-    <Flex m={"0"} p="0" bgColor={"red"} flexDirection={"row"}>
+    <Flex m={"0"} p="0" flexDirection={"row"}>
       <Box bgColor={"green"} maxW="fit-content" p="0" m="0">
         <Flex
           direction="column"
@@ -88,10 +89,11 @@ function Chat() {
         </Flex>
       </Box>
       <Box p="0" m="0" bgColor={"#23272A"} height="100vh" flexGrow={"1"}>
+        <Navbar name="daniel" />
         <Box
           overflowY="scroll"
-          height={"89vh"}
-          bgColor="red"
+          height={"82vh"}
+          py={"2"}
           css={{
             "&::-webkit-scrollbar": {
               display: "none",
@@ -100,12 +102,13 @@ function Chat() {
             scrollbarWidth: "none",
           }}
         >
-          <Flex bgColor={"green"}></Flex>
-          {/* {Array(5)
+          <Flex flexDirection={"column"}>
+            {Array(50)
               .fill("dani")
               .map((val, i) => {
                 return <FriendCard id={i} name={val} />;
-              })} */}
+              })}
+          </Flex>
         </Box>
       </Box>
     </Flex>
