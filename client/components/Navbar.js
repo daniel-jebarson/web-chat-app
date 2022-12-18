@@ -66,6 +66,10 @@ function Navbar(props) {
         color={"white"}
         size={"lg"}
         icon={<FiHelpCircle />}
+        onClick={() => {
+          window.location.href =
+            "https://github.com/daniel-jebarson/web-chat-app/blob/main/README.md";
+        }}
       />
       <IconButton
         variant="link"

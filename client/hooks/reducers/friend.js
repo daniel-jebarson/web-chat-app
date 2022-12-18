@@ -9,4 +9,3 @@ export function friendReducer(friends = [], action) {
       return friends;
   }
 }
-// export default friendReducer;
