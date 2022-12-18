@@ -7,6 +7,7 @@ import {
   IconButton,
   Icon,
 } from "@chakra-ui/react";
+import FriendCard from "../components/FriendCard";
 import { SunIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
 function Chat() {
@@ -76,11 +77,37 @@ function Chat() {
                 new chat
               </Button>
             </Flex>
-            chats
+            <Flex flexDir={"column"} flexGrow="1" gap="2px">
+              {Array(50)
+                .fill("Daniel")
+                .map((v, i) => {
+                  return <FriendCard name={v} id={i} />;
+                })}
+            </Flex>
           </Flex>
         </Flex>
       </Box>
-      <Box p="0" m="0" bgColor={"#23272A"} height="100vh" flexGrow={"1"}></Box>
+      <Box p="0" m="0" bgColor={"#23272A"} height="100vh" flexGrow={"1"}>
+        <Box
+          overflowY="scroll"
+          height={"89vh"}
+          bgColor="red"
+          css={{
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+          }}
+        >
+          <Flex bgColor={"green"}></Flex>
+          {/* {Array(5)
+              .fill("dani")
+              .map((val, i) => {
+                return <FriendCard id={i} name={val} />;
+              })} */}
+        </Box>
+      </Box>
     </Flex>
   );
 }
