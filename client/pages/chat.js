@@ -10,11 +10,16 @@ import {
 import MessageBox from "../components/MessageBox";
 import Navbar from "../components/Navbar";
 import FriendCard from "../components/FriendCard";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../hooks";
 import { SunIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 function Chat() {
-  const [select, setSelect] = useState(-1);
+  const dispatch = useDispatch();
+  const { SETCHAT } = bindActionCreators(actionCreators, dispatch);
+  const state = useSelector((state) => state.chat);
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
       <Box maxW="fit-content" p="0" m="0">
@@ -87,13 +92,13 @@ function Chat() {
                 .map((v, i) => {
                   return (
                     <Box
+                      key={i}
                       onClick={() => {
-                        setSelect(i);
-                        // console.log(select);
+                        SETCHAT(v, i);
                       }}
                     >
                       {" "}
-                      <FriendCard name={v} id={i} select={select} />
+                      <FriendCard name={v} id={i} select={state.id} />
                     </Box>
                   );
                 })}

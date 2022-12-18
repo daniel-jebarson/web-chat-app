@@ -1,4 +1,5 @@
 export default {
   ADD_FRIEND: "ADD_FRIEND",
   REMOVE_FRIEND: "REMOVE_FRIEND",
+  SET_CHAT: "SET_CHAT",
 };

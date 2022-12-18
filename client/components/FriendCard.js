@@ -10,7 +10,7 @@ export default function (props) {
       flexDirection={"row"}
       alignItems={"center"}
       gap={"2"}
-      bgColor={props.select == props.id ? "#23272A" : ""}
+      bgColor={props.select == props.id ? "#333539" : ""}
       cursor="pointer"
       _hover={{ bgColor: "#23272A" }}
     >
