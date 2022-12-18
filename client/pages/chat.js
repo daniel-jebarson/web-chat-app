@@ -7,14 +7,17 @@ import {
   IconButton,
   Icon,
 } from "@chakra-ui/react";
+import MessageBox from "../components/MessageBox";
 import Navbar from "../components/Navbar";
 import FriendCard from "../components/FriendCard";
 import { SunIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
+import { useState } from "react";
 function Chat() {
+  const [select, setSelect] = useState(-1);
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
-      <Box bgColor={"green"} maxW="fit-content" p="0" m="0">
+      <Box maxW="fit-content" p="0" m="0">
         <Flex
           direction="column"
           w="300px"
@@ -82,17 +85,36 @@ function Chat() {
               {Array(50)
                 .fill("Daniel")
                 .map((v, i) => {
-                  return <FriendCard name={v} id={i} />;
+                  return (
+                    <Box
+                      onClick={() => {
+                        setSelect(i);
+                        // console.log(select);
+                      }}
+                    >
+                      {" "}
+                      <FriendCard name={v} id={i} select={select} />
+                    </Box>
+                  );
                 })}
             </Flex>
           </Flex>
         </Flex>
       </Box>
-      <Box p="0" m="0" bgColor={"#23272A"} height="100vh" flexGrow={"1"}>
+      <Flex
+        p="0"
+        m="0"
+        flexDir={"column"}
+        bgColor={"#23272A"}
+        height="100vh"
+        flexGrow={"1"}
+      >
         <Navbar name="daniel" />
         <Box
+          bgColor={"#23272A"}
           overflowY="scroll"
-          height={"82vh"}
+          height={"80vh"}
+          mb={"4"}
           py={"2"}
           css={{
             "&::-webkit-scrollbar": {
@@ -110,7 +132,8 @@ function Chat() {
               })}
           </Flex>
         </Box>
-      </Box>
+        <MessageBox />
+      </Flex>
     </Flex>
   );
 }

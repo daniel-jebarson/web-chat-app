@@ -1,11 +1,9 @@
 import { AiOutlineSync } from "react-icons/ai";
 import { FiHelpCircle } from "react-icons/fi";
-import { BsAt } from "react-icons/bs";
-import { Search2Icon } from "@chakra-ui/icons";
+
+import { Search2Icon, AtSignIcon } from "@chakra-ui/icons";
 import { MdPersonRemoveAlt1 } from "react-icons/md";
 import {
-  Box,
-  Icon,
   Flex,
   IconButton,
   Text,
@@ -27,14 +25,14 @@ function Navbar(props) {
     : `${spin} infinite 20s linear`;
   return (
     <Flex
-      height={"16"}
-      //   bgColor={"red"}
+      height={"8vh"}
       flexDirection="row"
       alignItems={"center"}
       gap={"4"}
       px={"10"}
+      pt="5"
     >
-      <Icon variant="link" color={"white"} size={"lg"} icon={<BsAt />} />
+      <AtSignIcon boxSize={"5"} color="whiteAlpha.500" />
       <Text
         color={"white"}
         fontSize="20"
@@ -57,7 +55,6 @@ function Navbar(props) {
           </InputRightElement>
         </InputGroup>
       </Container>
-
       <IconButton
         variant="link"
         color={"white"}

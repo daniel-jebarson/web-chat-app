@@ -10,7 +10,9 @@ export default function (props) {
       flexDirection={"row"}
       alignItems={"center"}
       gap={"2"}
+      bgColor={props.select == props.id ? "#23272A" : ""}
       cursor="pointer"
+      _hover={{ bgColor: "#23272A" }}
     >
       <Avatar
         size="md"
