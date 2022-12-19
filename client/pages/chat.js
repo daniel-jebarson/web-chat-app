@@ -142,7 +142,7 @@ function Chat() {
                       "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
                     }
                     time={"19-12-22 11:23PM"}
-                    isUser={true}
+                    isUser={Math.random() < 0.5}
                   />
                 );
               })}
