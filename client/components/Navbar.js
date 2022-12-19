@@ -13,6 +13,7 @@ import {
   InputRightElement,
   usePrefersReducedMotion,
   keyframes,
+  Box,
 } from "@chakra-ui/react";
 function Navbar(props) {
   const spin = keyframes`
@@ -44,7 +45,12 @@ function Navbar(props) {
       </Text>
       <Container color="white">
         <InputGroup>
-          <Input type="text" placeholder="Search Here" color="white" />
+          <Input
+            type="text"
+            placeholder="Search Here"
+            bgColor={"#222428"}
+            color="white"
+          />
           <InputRightElement>
             <IconButton
               size="md"

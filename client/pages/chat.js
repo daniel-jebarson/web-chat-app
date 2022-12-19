@@ -15,6 +15,7 @@ import { actionCreators } from "../hooks";
 import { SunIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
 import { useState, useEffect } from "react";
+import MessageCard from "../components/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
 function Chat() {
   const dispatch = useDispatch();
@@ -129,11 +130,21 @@ function Chat() {
             scrollbarWidth: "none",
           }}
         >
-          <Flex flexDirection={"column"}>
+          <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
             {Array(50)
               .fill("dani")
               .map((val, i) => {
-                return <FriendCard id={i} name={val} />;
+                return (
+                  <MessageCard
+                    id={i}
+                    name={val}
+                    message={
+                      "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+                    }
+                    time={"19-12-22 11:23PM"}
+                    isUser={true}
+                  />
+                );
               })}
           </Flex>
         </Box>
