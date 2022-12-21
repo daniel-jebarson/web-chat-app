@@ -17,6 +17,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import MessageCard from "../components/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
+import OverlayChat from "../components/OverlayChat";
 function Chat() {
   const dispatch = useDispatch();
   const { SETCHAT } = bindActionCreators(actionCreators, dispatch);
@@ -115,40 +116,46 @@ function Chat() {
         height="100vh"
         flexGrow={"1"}
       >
-        <Navbar name="daniel" />
-        <Box
-          bgColor={"#23272A"}
-          overflowY="scroll"
-          height={"80vh"}
-          mb={"4"}
-          py={"2"}
-          css={{
-            "&::-webkit-scrollbar": {
-              display: "none",
-            },
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-          }}
-        >
-          <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
-            {Array(50)
-              .fill("dani")
-              .map((val, i) => {
-                return (
-                  <MessageCard
-                    id={i}
-                    name={val}
-                    message={
-                      "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
-                    }
-                    time={"19-12-22 11:23PM"}
-                    isUser={Math.random() < 0.5}
-                  />
-                );
-              })}
-          </Flex>
-        </Box>
-        <MessageBox />
+        {state.id == -1 ? (
+          <OverlayChat />
+        ) : (
+          <Box>
+            <Navbar name="daniel" />
+            <Box
+              bgColor={"#23272A"}
+              overflowY="scroll"
+              height={"80vh"}
+              mb={"4"}
+              py={"2"}
+              css={{
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+              }}
+            >
+              <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
+                {Array(50)
+                  .fill("dani")
+                  .map((val, i) => {
+                    return (
+                      <MessageCard
+                        id={i}
+                        name={val}
+                        message={
+                          "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+                        }
+                        time={"19-12-22 11:23PM"}
+                        isUser={Math.random() < 0.5}
+                      />
+                    );
+                  })}
+              </Flex>
+            </Box>
+            <MessageBox />
+          </Box>
+        )}
       </Flex>
     </Flex>
   );
