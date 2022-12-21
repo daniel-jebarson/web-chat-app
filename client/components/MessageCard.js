@@ -1,6 +1,8 @@
 import React from "react";
-import { Avatar, Flex, Text, Box } from "@chakra-ui/react";
-
+import { Avatar, Flex, Text, Box, IconButton } from "@chakra-ui/react";
+import { TbEdit } from "react-icons/tb";
+import { MdDelete } from "react-icons/md";
+import { BiSave } from "react-icons/bi";
 export default function (props) {
   return (
     <Flex flexDirection={props.isUser ? "row" : "row-reverse"} px={"4"}>
@@ -71,6 +73,24 @@ export default function (props) {
             <Text color={"white"} fontSize="11" position={"relative"} right="1">
               {props.time}
             </Text>
+            {props.isUser ? (
+              <Box>
+                <IconButton
+                  variant="link"
+                  color={"white"}
+                  size={"lg"}
+                  icon={<TbEdit />}
+                />
+                <IconButton
+                  variant="link"
+                  color={"white"}
+                  size={"lg"}
+                  icon={<MdDelete />}
+                />
+              </Box>
+            ) : (
+              ""
+            )}
           </Flex>
         </Flex>
       </Flex>
