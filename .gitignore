@@ -6,6 +6,10 @@
 /.pnp
 .pnp.js
 
+
+#my-local-files
+/client/pages/myfiles
+
 # testing
 /coverage
 
