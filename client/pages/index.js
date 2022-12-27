@@ -14,17 +14,60 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
+import Axios from "axios";
 
 const Home = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const toast = useToast();
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  const loginUser = (e) => {
-    console.log("logger");
+  const loginUser = async (e) => {
+    setLoading(true);
     e.preventDefault();
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    try {
+      const { data } = await Axios.post(
+        "http://localhost:5000/user/login",
+        {
+          gmail: email,
+          password: pass,
+        },
+        config
+      );
+      toast({
+        title: "Logged in Successfully!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+        position: "bottom",
+      });
+      // console.log(data);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+      window.location.href = "./chat";
+    } catch (err) {
+      toast({
+        title: "Error Occured!",
+        description: err.response.data.msg,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      // console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,7 +103,12 @@ const Home = () => {
                     pointerEvents="none"
                     children={<EmailIcon color="gray.500" />}
                   />
-                  <Input type="email" placeholder="email address" />
+                  <Input
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="email address"
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -71,8 +119,10 @@ const Home = () => {
                     children={<LockIcon color="gray.500" />}
                   />
                   <Input
+                    onChange={(e) => setPass(e.target.value)}
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    required
                   />
                   <InputRightElement width="3.5rem">
                     <IconButton
@@ -94,6 +144,7 @@ const Home = () => {
                 variant="solid"
                 colorScheme="teal"
                 width="full"
+                isLoading={loading}
               >
                 Login
               </Button>

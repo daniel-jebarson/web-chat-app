@@ -14,16 +14,81 @@ import {
   FormControl,
   InputRightElement,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
+import Axios from "axios";
 
 const Register = () => {
+  const toast = useToast();
+  const [pass, setPass] = useState("");
+  const [cpass, setcPass] = useState("");
+  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   const handleShowCClick = () => setShowCPassword(!showCPassword);
-  const postDetails = (img) => {};
+  // const postDetails = (img) => {
+  //   setLoading(true);
+  //   // if(img===undefined)
+  // };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    if (pass !== cpass) {
+      toast({
+        title: `Password and Confirm password are not equal`,
+        status: "error",
+        isClosable: true,
+      });
+    } else {
+      try {
+        setLoading(true);
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+        console.log(user, email, pass);
+        const { data } = await Axios.post(
+          "http://localhost:5000/user",
+          {
+            username: user,
+            gmail: email,
+            password: pass,
+          },
+          config
+        );
+        console.log(data);
+        toast({
+          title: "Registered Successfully",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+          position: "bottom",
+        });
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        setLoading(false);
+        window.location.href = "./chat";
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        // e.preventDefault();
+        toast({
+          title: "Error Occured!",
+          description: err.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+    }
+  };
+
   return (
     <Flex
       flexDirection="column"
@@ -43,7 +108,7 @@ const Register = () => {
         <Avatar bg="teal.500" />
         <Heading color="teal.400">Welcome</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
+          <form onSubmit={registerUser}>
             <Stack
               spacing={4}
               px="1rem"
@@ -57,7 +122,12 @@ const Register = () => {
                     pointerEvents="none"
                     children={<EmailIcon color="gray.500" />}
                   />
-                  <Input type="email" placeholder="email address" />
+                  <Input
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="email address"
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -66,7 +136,12 @@ const Register = () => {
                     pointerEvents="none"
                     children={<Icon as={FaRegUser} color="gray.500" />}
                   />
-                  <Input type="text" placeholder="Username" />
+                  <Input
+                    onChange={(e) => setUser(e.target.value)}
+                    type="text"
+                    placeholder="Username"
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -77,8 +152,10 @@ const Register = () => {
                     children={<LockIcon color="gray.500" />}
                   />
                   <Input
+                    onChange={(e) => setPass(e.target.value)}
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    required
                   />
                   <InputRightElement width="3.5rem">
                     <IconButton
@@ -99,8 +176,10 @@ const Register = () => {
                     children={<LockIcon color="gray.500" />}
                   />
                   <Input
+                    onChange={(e) => setcPass(e.target.value)}
                     type={showCPassword ? "text" : "password"}
                     placeholder="Confirm Password"
+                    required
                   />
                   <InputRightElement width="3.5rem">
                     <IconButton
@@ -113,7 +192,7 @@ const Register = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              {/* <FormControl >
+              {/* <FormControl>
                 <Input
                   type="file"
                   p={1.5}
@@ -128,6 +207,7 @@ const Register = () => {
                 variant="solid"
                 colorScheme="teal"
                 width="full"
+                isLoading={loading}
               >
                 Register
               </Button>

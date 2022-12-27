@@ -12,17 +12,20 @@ const cors = require("cors");
 const sample = require("./routes/sample");
 const userRoutes = require("./routes/user");
 const colors = require("colors");
-// middleware
 
-// app.use(express.static("./public"));
-// app.use(express.json());
+// middleware
 
 app.use(cors());
 app.use(express.json());
+app.use((_req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+
+  next();
+});
 // routes
 app.use("/sample", sample);
 app.use("/user", userRoutes);
-// app.use("/api/v1/tasks", tasks);
 
 app.use(errorHandler);
 app.use(NotFound);
