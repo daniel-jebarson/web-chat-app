@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
+const { CustomError } = require("../error/custom");
 const UserModel = require("../models/User");
 const generateJWToken = require("../config/webtoken");
-const { CustomError } = require("../error/custom");
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search

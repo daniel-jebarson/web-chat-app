@@ -5,12 +5,12 @@ const server = http.createServer(app);
 const connectSocket = require("./controllers/socket");
 require("dotenv").config();
 const NotFound = require("./middleware/404");
-const asyncWrapper = require("./middleware/asyncWrapper");
 const errorHandler = require("./middleware/errorHandler");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const sample = require("./routes/sample");
 const userRoutes = require("./routes/user");
+const chatRoutes = require("./routes/chat");
 const colors = require("colors");
 
 // middleware
@@ -26,6 +26,7 @@ app.use((_req, res, next) => {
 // routes
 app.use("/sample", sample);
 app.use("/user", userRoutes);
+app.use("/chat", chatRoutes);
 
 app.use(errorHandler);
 app.use(NotFound);
