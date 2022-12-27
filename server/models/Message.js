@@ -4,16 +4,15 @@ const MessageSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      lowercase: true,
       trim: true,
     },
     sender: {
-      type: String,
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    receiver: {
-      type: String,
-      trim: true,
+    chat: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
     },
     isDeleted: {
       type: Boolean,
@@ -26,4 +25,4 @@ const MessageSchema = new mongoose.Schema(
 );
 
 export const Messages =
-  mongoose.models.Messages || mongoose.model("Messages", MessageSchema);
+  mongoose.models.Messages || mongoose.model("Message", MessageSchema);
