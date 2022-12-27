@@ -23,7 +23,7 @@ const Register = () => {
   const [showCPassword, setShowCPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   const handleShowCClick = () => setShowCPassword(!showCPassword);
-
+  const postDetails = (img) => {};
   return (
     <Flex
       flexDirection="column"
@@ -113,6 +113,14 @@ const Register = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              {/* <FormControl >
+                <Input
+                  type="file"
+                  p={1.5}
+                  accept="image/*"
+                  onChange={(e) => postDetails(e.target.files[0])}
+                />
+              </FormControl> */}
 
               <Button
                 borderRadius={0}

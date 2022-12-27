@@ -3,10 +3,9 @@ const { connect } = require("mongoose");
 const options = {
   useUnifiedTopology: true,
   useNewUrlParser: true,
-  useUnifiedTopology: true,
 };
-const connectDB = (url) => {
-  return connect(url, options);
+const connectDB = () => {
+  return connect(process.env.MONGO_URL, options);
 };
 
 module.exports = connectDB;

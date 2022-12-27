@@ -7,9 +7,10 @@ require("dotenv").config();
 const NotFound = require("./middleware/404");
 const asyncWrapper = require("./middleware/asyncWrapper");
 const errorHandler = require("./middleware/errorHandler");
-const connectDB = require("./db/connect");
+const connectDB = require("./config/db");
 const cors = require("cors");
 const sample = require("./routes/sample");
+const colors = require("colors");
 // middleware
 
 // app.use(express.static("./public"));
@@ -28,13 +29,14 @@ const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URL);
-    console.log("Connected to db");
+    const con = await connectDB();
+    console.log(`MongoDB connected: ${con.connection.host}`.cyan.underline);
     server.listen(port, () =>
-      console.log(`Server is listening on port ${port}...`)
+      console.log(`Server is listening on port ${port}...`.green.bold)
     );
   } catch (error) {
-    console.log(error);
+    console.log(error, red.bold);
+    process.exit();
   }
 };
 
