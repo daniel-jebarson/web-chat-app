@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema(
   {
     gmail: {
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    friends: { type: [String] },
+    friends: { type: [String], default: [] },
     image: {
       type: String,
       default:
@@ -29,5 +29,19 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-export const Users =
-  mongoose.models.Users || mongoose.model("User", userSchema);
+userSchema.methods.matchPassword = async function (pass) {
+  return await bcrypt.compare(pass, this.password);
+};
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+const Users = mongoose.models.Users || mongoose.model("User", userSchema);
+
+module.exports = Users;

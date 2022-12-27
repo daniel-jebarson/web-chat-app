@@ -10,6 +10,7 @@ const errorHandler = require("./middleware/errorHandler");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const sample = require("./routes/sample");
+const userRoutes = require("./routes/user");
 const colors = require("colors");
 // middleware
 
@@ -17,9 +18,10 @@ const colors = require("colors");
 // app.use(express.json());
 
 app.use(cors());
-
+app.use(express.json());
 // routes
 app.use("/sample", sample);
+app.use("/user", userRoutes);
 // app.use("/api/v1/tasks", tasks);
 
 app.use(errorHandler);
