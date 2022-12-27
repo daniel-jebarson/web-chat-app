@@ -18,10 +18,41 @@ import { useState, useEffect } from "react";
 import MessageCard from "../components/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
 import OverlayChat from "../components/OverlayChat";
+import { io } from "socket.io-client";
+import { socket } from "../util/socket";
+// import { socket } from "../util/socket";
+// const socket = io("http://localhost:5000");
+// socket.emit("login", "dani" + Math.random());
+
 function Chat() {
   const dispatch = useDispatch();
   const { SETCHAT } = bindActionCreators(actionCreators, dispatch);
+  // const [socket, setSocket] = useState(null);
   const state = useSelector((state) => state.chat);
+  // useEffect(() => {
+  //   const socket = io("http://localhost:5000");
+  //   // socket.emit("login", "dani" + Math.random());
+  //   // console.log("ok");
+  // }, [true]);
+  // useEffect(() => {
+  //   socket.on("online", (data) => {
+  //     console.log(data);
+  //   });
+  // }, [socket]);
+  // useEffect(() => {
+  //   const newSocket = io("http://localhost:5000");
+  //   setSocket(newSocket);
+  //   try {
+  //     return socket.disconnect();
+  //   } catch {
+  //     return "ok";
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   socket.emit("logine", { value: "dani" + Math.random() });
+  //   console.log("ok");
+  // }, [socket]);
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
       <Box maxW="fit-content" p="0" m="0">

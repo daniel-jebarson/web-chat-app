@@ -22,6 +22,11 @@ const Home = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  const loginUser = (e) => {
+    console.log("logger");
+    e.preventDefault();
+  };
+
   return (
     <Flex
       flexDirection="column"
@@ -41,7 +46,7 @@ const Home = () => {
         <Avatar bg="teal.500" />
         <Heading color="teal.400">Welcome</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
+          <form onSubmit={loginUser}>
             <Stack
               spacing={4}
               px="1rem"
