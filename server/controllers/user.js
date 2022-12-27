@@ -2,6 +2,23 @@ const asyncHandler = require("express-async-handler");
 const UserModel = require("../models/User");
 const generateJWToken = require("../config/webtoken");
 const { CustomError } = require("../error/custom");
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { username: { $regex: req.query.search, $options: "i" } },
+          { gmail: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const AllUsers = await UserModel.find(keyword).find({
+    _id: { $ne: req.user._id },
+  });
+  res.send(AllUsers);
+});
+
 const registerUser = asyncHandler(async (req, res) => {
   const { username, gmail, password, image, friends } = req.body;
   if (!username || !gmail || !password) {
@@ -66,4 +83,5 @@ const loginUser = asyncHandler(async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  getAllUsers,
 };
