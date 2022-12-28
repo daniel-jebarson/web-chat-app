@@ -18,7 +18,9 @@ import { FiLogOut } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import MessageCard from "../components/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
-import OverlayChat from "../components/OverlayChat";
+import OverlayChat from "../components/misc/OverlayChat";
+import PorfileView from "../components/views/ProfileView";
+
 import { io } from "socket.io-client";
 // import { socket } from "../util/socket";
 // import { socket } from "../util/socket";
@@ -121,11 +123,16 @@ function Chat() {
             bgColor={"#23272A"}
             borderRight={"1px solid #2D3748"}
           >
-            <Avatar
+            {/* <Avatar
+              cursor={"pointer"}
+              onClick={() => {
+                console.log("ok");
+              }}
               src={
                 "https://lh3.googleusercontent.com/a/AEdFTp7kiDrC2tOsV1S8_g-WJXQlmhRAFFZCYskUxGsYFA=s96-c"
               }
-            />
+            /> */}
+            <PorfileView username={userData.username} gmail={userData.gmail} />
             <Stack isInline>
               <IconButton
                 size="sm"

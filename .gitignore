@@ -8,7 +8,7 @@
 
 
 #my-local-files
-/client/pages/myfiles
+/client/pages/sample
 
 # testing
 /coverage
