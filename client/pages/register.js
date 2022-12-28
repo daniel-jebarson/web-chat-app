@@ -19,7 +19,7 @@ import {
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 import Axios from "axios";
-
+import { useEffect } from "react";
 const Register = () => {
   const toast = useToast();
   const [pass, setPass] = useState("");
@@ -35,6 +35,13 @@ const Register = () => {
   //   setLoading(true);
   //   // if(img===undefined)
   // };
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("userInfo"));
+    if (data) {
+      window.location.href = "./chat";
+    }
+  }, []);
 
   const registerUser = async (e) => {
     e.preventDefault();

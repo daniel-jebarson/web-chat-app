@@ -1,5 +1,6 @@
 import { addFriend, removeFriend } from "../actions/friend";
 import { setChat } from "../actions/chat";
+import { setUser } from "../actions/user";
 import {
   ADD_MESSAGE,
   DELETE_MESSAGE,
@@ -52,5 +53,11 @@ export const ADDUSERMESSAGE = (receiver, messages) => {
 export const REMOVEUSERMESSAGE = (receiver) => {
   return (dispatch) => {
     dispatch(REMOVE_USER_MESSAGE(receiver));
+  };
+};
+
+export const SETUSER = (userinfo) => {
+  return (dispatch) => {
+    dispatch(setUser(userinfo));
   };
 };

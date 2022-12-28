@@ -17,6 +17,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
+import { useEffect } from "react";
+
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 import Axios from "axios";
 
@@ -28,7 +30,17 @@ const Home = () => {
   const toast = useToast();
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("userInfo"));
+    if (data) {
+      window.location.href = "./chat";
+    }
+  }, []);
+
   const loginUser = async (e) => {
+    async function sleep(milliseconds) {
+      return await new Promise((resolve) => setTimeout(resolve, milliseconds));
+    }
     setLoading(true);
     e.preventDefault();
     const config = {
@@ -54,6 +66,7 @@ const Home = () => {
       });
       // console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
+      await sleep(3000);
       setLoading(false);
       window.location.href = "./chat";
     } catch (err) {

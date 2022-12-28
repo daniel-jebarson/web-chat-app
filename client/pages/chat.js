@@ -6,6 +6,7 @@ import {
   Stack,
   IconButton,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
 import MessageBox from "../components/MessageBox";
 import Navbar from "../components/Navbar";
@@ -19,16 +20,55 @@ import MessageCard from "../components/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
 import OverlayChat from "../components/OverlayChat";
 import { io } from "socket.io-client";
-import { socket } from "../util/socket";
+// import { socket } from "../util/socket";
 // import { socket } from "../util/socket";
 // const socket = io("http://localhost:5000");
 // socket.emit("login", "dani" + Math.random());
 
 function Chat() {
   const dispatch = useDispatch();
-  const { SETCHAT } = bindActionCreators(actionCreators, dispatch);
+  const toast = useToast();
+  const { SETCHAT, SETUSER } = bindActionCreators(actionCreators, dispatch);
   // const [socket, setSocket] = useState(null);
   const state = useSelector((state) => state.chat);
+  const userData = useSelector((state) => state.user);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("userInfo"));
+    if (!data) {
+      toast({
+        title: "Session expired!",
+        description: "Login again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      sleep(2000);
+      window.location.href = "./";
+    } else {
+      SETUSER(data);
+    }
+  }, []);
+
+  async function sleep(milliseconds) {
+    return await new Promise((resolve) => setTimeout(resolve, milliseconds));
+  }
+
+  const logOut = async () => {
+    localStorage.clear();
+    toast({
+      title: "Logging out ...",
+      description: "Logged out successfully!",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom",
+    });
+    await sleep(2500);
+    window.location.href = "./";
+  };
+
   // useEffect(() => {
   //   const socket = io("http://localhost:5000");
   //   // socket.emit("login", "dani" + Math.random());
@@ -98,6 +138,7 @@ function Chat() {
                 icon={<Icon as={FiLogOut} />}
                 _focus={{ boxShadow: "none" }}
                 size="sm"
+                onClick={logOut}
                 isRound
               />
             </Stack>
