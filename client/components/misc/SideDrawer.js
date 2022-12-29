@@ -17,6 +17,7 @@ import {
   DrawerBody,
   DrawerHeader,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
 const SideDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,6 +25,7 @@ const SideDrawer = () => {
   const [result, setResult] = useState([]);
   const [loading, setloading] = useState(false);
   const [loadingUser, setLoadingUser] = useState(false);
+  const toast = useToast();
 
   return (
     <>

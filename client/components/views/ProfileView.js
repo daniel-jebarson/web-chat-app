@@ -17,10 +17,6 @@ import {
 } from "@chakra-ui/react";
 export default function ProfileView({ username, gmail }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const { username, gmail } = JSON.parse(localStorage.getItem("userInfo"));
-  // const username = "dani",
-  //   gmail = "dani@gmail.com";
-  // console.log(localStorage.getItem("userInfo"));
   return (
     <>
       <Tooltip placement="right-end" hasArrow label="Profile View">
