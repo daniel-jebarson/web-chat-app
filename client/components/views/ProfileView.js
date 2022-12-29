@@ -49,7 +49,7 @@ export default function ProfileView({ username, gmail }) {
             >
               <Avatar
                 size="xl"
-                name="Christian Nwamba"
+                name={username}
                 src={`https://avatars.dicebear.com/api/bottts/${username}.svg`}
               />
               <Flex flexDirection={"column"} color={"white"}>

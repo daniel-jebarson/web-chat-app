@@ -16,6 +16,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
   const AllUsers = await UserModel.find(keyword).find({
     _id: { $ne: req.user._id },
   });
+  // console.log(AllUsers);
   res.send(AllUsers);
 });
 

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { AddIcon } from "@chakra-ui/icons";
-
+import ChatLoader from "../animation/ChatLoader";
 import {
   RadioGroup,
   Stack,
   Radio,
+  Container,
   Input,
   Box,
   Spinner,
@@ -19,13 +20,64 @@ import {
   Tooltip,
   useToast,
 } from "@chakra-ui/react";
-const SideDrawer = () => {
+import Axios from "axios";
+
+function SideDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
+  const [user, setUser] = useState("");
   const [loading, setloading] = useState(false);
   const [loadingUser, setLoadingUser] = useState(false);
   const toast = useToast();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("userInfo")));
+  }, []);
+
+  const fetchUsers = async () => {
+    if (search === "" || !search) {
+      toast({
+        title: "Please type username to search",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      ref.current.focus();
+      return;
+    }
+
+    try {
+      setloading(true);
+      // console.log(user.token);
+      const config = {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      };
+      // console.log(user);
+      const { data } = await Axios.get(
+        `http://localhost:5000/user?search=${search}`,
+        config
+      );
+      // console.log(data);
+      setResult(data);
+      // setloading(false);
+    } catch (err) {
+      setloading(false);
+      console.log(err);
+      toast({
+        title: "Error Occured!",
+        description: "Failed to search result",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
 
   return (
     <>
@@ -49,26 +101,39 @@ const SideDrawer = () => {
 
       <Drawer placement={"start"} size={"sm"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent height={"100vh"}>
           <DrawerHeader borderBottomWidth="1px">Add User</DrawerHeader>
           <DrawerBody>
             <Box
               d="flex"
               justifyContent={"center"}
               alignItems={"center"}
+              flexDirection={"row"}
               pb={2}
+              zIndex={"1"}
+              width={"95%"}
             >
               <Input
                 placeholder="Search by name or email"
-                mr={2}
+                ref={ref}
+                w={"76%"}
                 width={"xs"}
                 defaultValue={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button mb={"1.5"} colorScheme={"green"} onClick={""}>
+              <Button ml={"2"} colorScheme={"green"} onClick={fetchUsers}>
                 Add
               </Button>
             </Box>
+            <Container>
+              {/* {Array(50)
+                .fill("sample")
+                .map((v) => {
+                  return <p>{v}</p>;
+                })} */}
+              <ChatLoader />
+              {/* {loading ? <chatLoader /> : ""} */}
+            </Container>
             {/* {loading ? (
               <ChatLoading />
             ) : (
@@ -81,12 +146,11 @@ const SideDrawer = () => {
               ))
             )} */}
             {/* {loadingChat && <Spinner ml="auto" d="flex" />} */}
-            <Spinner ml="auto" d="flex" />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
   );
-};
+}
 
 export default SideDrawer;
