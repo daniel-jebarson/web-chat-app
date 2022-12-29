@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { BiSend } from "react-icons/bi";
 import { Search2Icon } from "@chakra-ui/icons";
-import { socket } from "../util/socket";
+import { socket } from "../../util/socket";
 function MessageBox() {
   const handleMessage = () => {
     console.log("event called");

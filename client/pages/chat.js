@@ -8,15 +8,16 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/react";
-import MessageBox from "../components/MessageBox";
-import Navbar from "../components/Navbar";
-import FriendCard from "../components/FriendCard";
+import MessageBox from "../components/core/MessageBox";
+import Navbar from "../components/core/Navbar";
+import FriendCard from "../components/helpers/FriendCard";
 import { bindActionCreators } from "redux";
+import SlideDrawer from "../components/misc/SideDrawer";
 import { actionCreators } from "../hooks";
 import { SunIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
 import { useState, useEffect } from "react";
-import MessageCard from "../components/MessageCard";
+import MessageCard from "../components/helpers/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
 import OverlayChat from "../components/misc/OverlayChat";
 import PorfileView from "../components/views/ProfileView";
@@ -31,6 +32,7 @@ function Chat() {
   const dispatch = useDispatch();
   const toast = useToast();
   const { SETCHAT, SETUSER } = bindActionCreators(actionCreators, dispatch);
+
   // const [socket, setSocket] = useState(null);
   const state = useSelector((state) => state.chat);
   const userData = useSelector((state) => state.user);
@@ -158,14 +160,7 @@ function Chat() {
             flex="1"
           >
             <Flex direction="column" p={4}>
-              <Button
-                _focus={{ boxShadow: "none" }}
-                letterSpacing="wide"
-                textTransform="uppercase"
-                fontSize="md"
-              >
-                new chat
-              </Button>
+              <SlideDrawer />
             </Flex>
             <Flex flexDir={"column"} flexGrow="1" gap="2px">
               {Array(50)
