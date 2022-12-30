@@ -49,9 +49,10 @@ const getChatAccess = asyncHandler(async (req, res) => {
   }
 });
 
-const getChats = asyncHandler(async (req, res) => {
+const getPrivateChats = asyncHandler(async (req, res) => {
   try {
-    ChatModel.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    ChatModel.find({ users: { $elemMatch: { $eq: req.user._id } },
+      isGroupChat:false })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
@@ -68,4 +69,4 @@ const getChats = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getChatAccess, getChats };
+module.exports = { getChatAccess, getPrivateChats };

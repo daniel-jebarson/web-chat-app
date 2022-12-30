@@ -13,3 +13,11 @@ export const removeFriend = (friend) => {
     friend: friend,
   };
 };
+
+export const setFriends=(data,username)=>{
+  return{
+    type:actiontypes.SET_FRIENDS,
+    data:data,
+    username:username
+  }
+}

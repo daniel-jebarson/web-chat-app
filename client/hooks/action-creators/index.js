@@ -1,4 +1,4 @@
-import { addFriend, removeFriend } from "../actions/friend";
+import { addFriend, removeFriend,setFriends } from "../actions/friend";
 import { setChat } from "../actions/chat";
 import { setUser } from "../actions/user";
 import {
@@ -7,6 +7,7 @@ import {
   EDIT_MESSAGE,
   ADD_USER_MESSAGE,
   REMOVE_USER_MESSAGE,
+
 } from "../actions/message";
 export const ADDFRIEND = (friend) => {
   return (dispatch) => {
@@ -61,3 +62,9 @@ export const SETUSER = (userinfo) => {
     dispatch(setUser(userinfo));
   };
 };
+
+export const SETFRIENDS=(data,username)=>{
+  return(dispatch)=>{
+    dispatch(setFriends(data,username))
+  }
+}

@@ -21,7 +21,7 @@ import MessageCard from "../components/helpers/MessageCard";
 import { useDispatch, useSelector } from "react-redux";
 import OverlayChat from "../components/misc/OverlayChat";
 import PorfileView from "../components/views/ProfileView";
-
+import Axios from "axios";
 import { io } from "socket.io-client";
 // import { socket } from "../util/socket";
 // import { socket } from "../util/socket";
@@ -31,11 +31,38 @@ import { io } from "socket.io-client";
 function Chat() {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { SETCHAT, SETUSER } = bindActionCreators(actionCreators, dispatch);
+  const { SETCHAT, SETUSER, SETFRIENDS } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   // const [socket, setSocket] = useState(null);
-  const state = useSelector((state) => state.chat);
+  const chatData = useSelector((state) => state.chat);
+  const friendData = useSelector((state) => state.friends);
   const userData = useSelector((state) => state.user);
+
+  const fetchChatList = async (d) => {
+    try {
+      const config = {
+        headers: {
+          authorization: `Bearer ${d.token}`,
+        },
+      };
+      let { data } = await Axios.get(`http://localhost:5000/chat`, config);
+      SETFRIENDS(data, d.username);
+      // console.log(data);
+    } catch (err) {
+      toast({
+        title: "Failed to fetch chats!",
+        description: err.response.data.msg,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      // console.log(err);
+    }
+  };
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("userInfo"));
@@ -53,6 +80,8 @@ function Chat() {
     } else {
       SETUSER(data);
     }
+
+    fetchChatList(data);
   }, []);
 
   async function sleep(milliseconds) {
@@ -163,7 +192,23 @@ function Chat() {
               <SlideDrawer />
             </Flex>
             <Flex flexDir={"column"} flexGrow="1" gap="2px">
-              {Array(50)
+              {friendData.map((v, i) => {
+                return (
+                  <Box
+                    key={i}
+                    onClick={() => {
+                      SETCHAT(v.username, v._id);
+                    }}
+                  >
+                    <FriendCard
+                      name={v.username}
+                      id={v._id}
+                      select={chatData.id}
+                    />
+                  </Box>
+                );
+              })}
+              {/* {Array(50)
                 .fill("Daniel")
                 .map((v, i) => {
                   return (
@@ -174,10 +219,10 @@ function Chat() {
                       }}
                     >
                       {" "}
-                      <FriendCard name={v} id={i} select={state.id} />
+                      <FriendCard name={v} id={i} select={chatData.id} />
                     </Box>
                   );
-                })}
+                })} */}
             </Flex>
           </Flex>
         </Flex>
@@ -190,7 +235,7 @@ function Chat() {
         height="100vh"
         flexGrow={"1"}
       >
-        {state.id == -1 ? (
+        {chatData.id == -1 ? (
           <OverlayChat />
         ) : (
           <Box>

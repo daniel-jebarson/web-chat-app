@@ -114,22 +114,26 @@ function SideDrawer() {
               <Input
                 placeholder="Search by name or email"
                 ref={ref}
-                w={"76%"}
+                w={"74%"}
                 width={"xs"}
                 defaultValue={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
               <Button ml={"2"} colorScheme={"green"} onClick={fetchUsers}>
-                Add
+                Search
               </Button>
             </Box>
             <Stack mt={"4"}>
-             
               {loading ? (
                 <ChatLoader />
               ) : (
-                result.map((v) => {
-                  return <UserCard gmail={v.gmail} username={v.username} />;
+                result.map((v, i) => {
+                  return (
+                    <Box key={i}>
+                      {" "}
+                      <UserCard gmail={v.gmail} username={v.username} />
+                    </Box>
+                  );
                 })
               )}
             </Stack>
