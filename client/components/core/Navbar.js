@@ -16,6 +16,7 @@ import {
   usePrefersReducedMotion,
   keyframes,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import Axios from "axios";
 
@@ -24,16 +25,51 @@ function Navbar(props) {
   from { transform: rotate(0deg); }
   to { transform: rotate(5400deg); }`;
   const prefersReducedMotion = usePrefersReducedMotion();
-
+  const toast = useToast();
   const animation = prefersReducedMotion
     ? undefined
     : `${spin} infinite 20s linear`;
   const dispatch = useDispatch();
   const { REMOVEFRIEND } = bindActionCreators(actionCreators, dispatch);
-  const removeFriend = () => {
-    REMOVEFRIEND(props.name);
-    
-    console.log(props.name + " removed success");
+  const removeFriend = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      console.log(user.token);
+      const config = {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+        data: { userId: props.id },
+      };
+      const { data } = await Axios.delete(
+        `http://localhost:5000/chat`,
+
+        config
+      );
+
+      toast({
+        title: "Chat deleted successfully!",
+        description: `Removed chat of ${props.name}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
+
+      REMOVEFRIEND(props.name);
+
+      console.log(props.name + props.id + " removed success");
+    } catch (err) {
+      toast({
+        title: "Error occured!",
+        description: `Failed to delete chat of ${props.name}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      console.log(err);
+    }
   };
 
   return (

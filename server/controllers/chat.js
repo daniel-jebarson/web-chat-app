@@ -3,6 +3,36 @@ const { CustomError } = require("../error/custom");
 const ChatModel = require("../models/Chat");
 const UserModel = require("../models/User");
 
+const deleteChat = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+  if (!userId) {
+    throw new CustomError("UserId param not found", 400);
+  }
+  try {
+    let isDeleted = await ChatModel.deleteOne({
+      isGroupChat: false,
+      $and: [
+        {
+          users: { $elemMatch: { $eq: req.user._id } },
+        },
+        {
+          users: { $elemMatch: { $eq: userId } },
+        },
+      ],
+    });
+    if (isDeleted.deletedCount) {
+      res.status(200).json({
+        success: true,
+        msg: "Deletion success",
+      });
+    } else {
+      throw new CustomError("Nothing to delete", 400);
+    }
+  } catch (err) {
+    throw new CustomError(err.message, 400);
+  }
+});
+
 const getChatAccess = asyncHandler(async (req, res) => {
   const { userId } = req.body;
 
@@ -51,8 +81,10 @@ const getChatAccess = asyncHandler(async (req, res) => {
 
 const getPrivateChats = asyncHandler(async (req, res) => {
   try {
-    ChatModel.find({ users: { $elemMatch: { $eq: req.user._id } },
-      isGroupChat:false })
+    ChatModel.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+      isGroupChat: false,
+    })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
@@ -69,4 +101,4 @@ const getPrivateChats = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getChatAccess, getPrivateChats };
+module.exports = { getChatAccess, getPrivateChats, deleteChat };
