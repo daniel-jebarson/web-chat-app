@@ -18,20 +18,6 @@ const colors = require("colors");
 
 app.use(cors());
 app.use(express.json());
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "*");
-//   console.log(
-//     `${req.method} to ${
-//       req.path
-//     } ,body= ${JSON.stringify(req.body)} , headers= ${
-//       req.headers.authorization
-//     } with params= ${JSON.stringify(req.params)} and hostname=${req.hostname}`
-//       .yellow.italic
-//   );
-//   // console.log(JSON.stringify(req));
-//   next();
-// });
 app.use(logHandler);
 // routes
 app.use("/sample", sample);
