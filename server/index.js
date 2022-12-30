@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
+const logHandler = require("./middleware/logs/log");
 const connectSocket = require("./controllers/socket");
 require("dotenv").config();
-const NotFound = require("./middleware/404");
-const errorHandler = require("./middleware/errorHandler");
+const NotFound = require("./middleware/handler/404");
+const errorHandler = require("./middleware/handler/errorHandler");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const sample = require("./routes/sample");
@@ -17,16 +18,21 @@ const colors = require("colors");
 
 app.use(cors());
 app.use(express.json());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  console.log(
-    `${req.method} ${req.path} ${JSON.stringify(req.body)} ${
-      req.headers.authorization
-    }`
-  );
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "*");
+//   console.log(
+//     `${req.method} to ${
+//       req.path
+//     } ,body= ${JSON.stringify(req.body)} , headers= ${
+//       req.headers.authorization
+//     } with params= ${JSON.stringify(req.params)} and hostname=${req.hostname}`
+//       .yellow.italic
+//   );
+//   // console.log(JSON.stringify(req));
+//   next();
+// });
+app.use(logHandler);
 // routes
 app.use("/sample", sample);
 app.use("/user", userRoutes);

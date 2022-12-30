@@ -5,7 +5,7 @@ const {
   getAllUsers,
 } = require("../controllers/user.js");
 const { sampleGet } = require("../controllers/sample");
-const { authorizer } = require("../middleware/auth");
+const { authorizer } = require("../middleware/auth/auth");
 const router = express.Router();
 
 router.route("/").post(registerUser).get(authorizer, getAllUsers);

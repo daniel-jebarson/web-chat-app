@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
-const UserModel = require("../models/User");
+const UserModel = require("../../models/User");
 const asyncHandler = require("express-async-handler");
-const { CustomError } = require("../error/custom");
+const { CustomError } = require("../../error/custom");
 
 const authorizer = asyncHandler(async (req, res, next) => {
   let token;
-  // console.log(req.headers);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
