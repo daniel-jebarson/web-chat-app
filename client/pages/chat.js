@@ -29,8 +29,8 @@ import { io } from "socket.io-client";
 // socket.emit("login", "dani" + Math.random());
 
 function Chat() {
-  const dispatch = useDispatch();
   const toast = useToast();
+  const dispatch = useDispatch();
   const { SETCHAT, SETUSER, SETFRIENDS } = bindActionCreators(
     actionCreators,
     dispatch
@@ -239,7 +239,7 @@ function Chat() {
           <OverlayChat />
         ) : (
           <Box>
-            <Navbar name="daniel" />
+            <Navbar name={chatData.name} id={chatData.id} />
             <Box
               bgColor={"#23272A"}
               overflowY="scroll"

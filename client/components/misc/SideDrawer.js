@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import UserCard from "../helpers/UserCard";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 function SideDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,6 +31,8 @@ function SideDrawer() {
   const [loadingUser, setLoadingUser] = useState(false);
   const toast = useToast();
   const ref = useRef(null);
+
+  const friendsData = useSelector((state) => state.friends);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("userInfo")));
@@ -60,8 +63,13 @@ function SideDrawer() {
         `http://localhost:5000/user?search=${search}`,
         config
       );
-      console.log(data);
-      setResult(data);
+
+     
+      setResult(
+        data.filter(
+          (d) => !friendsData.map((k) => k.username).includes(d.username)
+        )
+      );
       setloading(false);
     } catch (err) {
       setloading(false);
@@ -131,7 +139,11 @@ function SideDrawer() {
                   return (
                     <Box key={i}>
                       {" "}
-                      <UserCard gmail={v.gmail} username={v.username} />
+                      <UserCard
+                        data={v}
+                        gmail={v.gmail}
+                        username={v.username}
+                      />
                     </Box>
                   );
                 })

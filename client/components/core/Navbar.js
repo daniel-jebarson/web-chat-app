@@ -1,6 +1,8 @@
 import { AiOutlineSync } from "react-icons/ai";
 import { FiHelpCircle } from "react-icons/fi";
-
+import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators } from "../../hooks";
 import { Search2Icon, AtSignIcon } from "@chakra-ui/icons";
 import { MdPersonRemoveAlt1 } from "react-icons/md";
 import {
@@ -15,6 +17,8 @@ import {
   keyframes,
   Box,
 } from "@chakra-ui/react";
+import Axios from "axios";
+
 function Navbar(props) {
   const spin = keyframes`
   from { transform: rotate(0deg); }
@@ -24,6 +28,14 @@ function Navbar(props) {
   const animation = prefersReducedMotion
     ? undefined
     : `${spin} infinite 20s linear`;
+  const dispatch = useDispatch();
+  const { REMOVEFRIEND } = bindActionCreators(actionCreators, dispatch);
+  const removeFriend = () => {
+    REMOVEFRIEND(props.name);
+    
+    console.log(props.name + " removed success");
+  };
+
   return (
     <Flex
       height={"8vh"}
@@ -65,6 +77,7 @@ function Navbar(props) {
         variant="link"
         color={"white"}
         size={"lg"}
+        onClick={removeFriend}
         icon={<MdPersonRemoveAlt1 />}
       />
       <IconButton

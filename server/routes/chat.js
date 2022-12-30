@@ -6,8 +6,7 @@ const router = express.Router();
 router
   .route("/")
   .post(authorizer, getChatAccess)
-  .get(authorizer, getPrivateChats);
-
+  .get(authorizer, getPrivateChats)
 // router.route("/group").post(authorizer, createGroupChat);
 // router.route("/rename").put(authorizer, renameGroup);
 // router.route("/groupremove").put(authorizer, removeFromGroup);
