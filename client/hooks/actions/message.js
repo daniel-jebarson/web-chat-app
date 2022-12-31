@@ -1,10 +1,10 @@
 import actiontypes from "../action-types/actiontypes";
 
-export const ADD_MESSAGE = (message, receiver) => {
+export const ADD_MESSAGE = (message, id) => {
   return {
     type: actiontypes.ADD_FRIEND,
     message: message,
-    receiver: receiver,
+    id: id,
   };
 };
 

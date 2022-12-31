@@ -21,9 +21,9 @@ export const REMOVEFRIEND = (friend) => {
   };
 };
 
-export const ADDMESSAGE = (message, receiver) => {
+export const ADDMESSAGE = (message, id) => {
   return (dispatch) => {
-    dispatch(ADD_MESSAGE(message, receiver));
+    dispatch(ADD_MESSAGE(message, id));
   };
 };
 
@@ -39,9 +39,9 @@ export const EDITMESSAGE = (message, receiver, index) => {
   };
 };
 
-export const SETCHAT = (name, index) => {
+export const SETCHAT = (username,id) => {
   return (dispatch) => {
-    dispatch(setChat(name, index));
+    dispatch(setChat(username,id));
   };
 };
 

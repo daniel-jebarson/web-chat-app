@@ -5,7 +5,11 @@ import { MdDelete } from "react-icons/md";
 import { BiSave } from "react-icons/bi";
 export default function (props) {
   return (
-    <Flex flexDirection={props.isUser ? "row" : "row-reverse"} px={"4"}>
+    <Flex
+      key={props.id}
+      flexDirection={props.isUser ? "row" : "row-reverse"}
+      px={"4"}
+    >
       <Box width={"36%"}></Box>
       <Flex
         px={"2"}

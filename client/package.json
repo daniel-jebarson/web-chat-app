@@ -43,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/daniel-jebarson/web-chat-app/issues"
   },
-  "homepage": "https://github.com/daniel-jebarson/web-chat-app#readme"
+  "homepage": "https://github.com/daniel-jebarson/web-chat-app#readme",
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.9"
+  }
 }

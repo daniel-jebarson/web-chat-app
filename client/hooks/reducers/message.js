@@ -2,30 +2,30 @@ import actiontypes from "../action-types/actiontypes";
 export function messageReducer(messages = {}, action) {
   switch (action.type) {
     case actiontypes.ADD_MESSAGE:
-      if (messages.hasOwnProperty(action.receiver)) {
-        messages[action.receiver] = [
-          ...messages[action.receiver],
-          action.message,
-        ];
+      // messages = [...messages, action.message];
+      if (messages.hasOwnProperty(action.id)) {
+        messages[action.id] = [...messages[action.id], action.message];
+        console.log("old");
       } else {
-        messages[action.receiver] = [action.message];
+        messages[action.id] = [action.message];
+        console.log("new");
       }
       return messages;
 
     case actiontypes.DELETE_MESSAGE:
-      messages[action.receiver][action.index][isDeleted] = true;
+      messages[action.id][action.index][isDeleted] = true;
       return messages;
 
     case actiontypes.EDIT_MESSAGE:
-      messages[action.receiver][action.index] = action.message;
+      messages[action.id][action.index] = action.message;
       return messages;
 
     case actiontypes.ADD_USER_MESSAGE:
-      messages[action.receiver] = action.messages;
+      messages[action.id] = action.messages;
       return messages;
 
     case actiontypes.REMOVE_USER_MESSAGE:
-      delete messages[action.receiver];
+      delete messages[action.id];
       return messages;
 
     default:
