@@ -12,6 +12,7 @@ const cors = require("cors");
 const sample = require("./routes/sample");
 const userRoutes = require("./routes/user");
 const chatRoutes = require("./routes/chat");
+const messageRoutes=require("./routes/message")
 const colors = require("colors");
 
 // middleware
@@ -23,6 +24,7 @@ app.use(logHandler);
 app.use("/sample", sample);
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
+app.use("/message",messageRoutes);
 
 app.use(errorHandler);
 app.use(NotFound);
@@ -37,7 +39,7 @@ const start = async () => {
       console.log(`Server is listening on port ${port}...`.green.bold)
     );
   } catch (error) {
-    console.log(error, red.bold);
+    console.log(`${error}`.red.bold);
     process.exit();
   }
 };
