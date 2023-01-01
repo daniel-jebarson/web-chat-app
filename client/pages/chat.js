@@ -31,7 +31,7 @@ import { io } from "socket.io-client";
 function Chat() {
   const toast = useToast();
   const dispatch = useDispatch();
-  const { SETCHAT, SETUSER, SETFRIENDS } = bindActionCreators(
+  const { SETCHAT, SETUSER, SETFRIENDS, ADDUSERMESSAGE } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -40,6 +40,35 @@ function Chat() {
   const chatData = useSelector((state) => state.chat);
   const friendData = useSelector((state) => state.friends);
   const userData = useSelector((state) => state.user);
+  const messageData = useSelector((state) => state.messages);
+
+  const fetchMessages = async (username, id) => {
+    try {
+      const config = {
+        headers: {
+          authorization: `Bearer ${userData.token}`,
+        },
+      };
+      let { data } = await Axios.post(
+        `http://localhost:5000/message/${id}`,
+        {},
+        config
+      );
+      // console.log(data);
+      ADDUSERMESSAGE(id, data);
+      SETCHAT(username, id);
+    } catch (err) {
+      // console.log(err);
+      toast({
+        title: "Failed to fetch messages!",
+        description: err.response.data.msg,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
 
   const fetchChatList = async (d) => {
     try {
@@ -198,6 +227,7 @@ function Chat() {
                     key={i}
                     onClick={() => {
                       SETCHAT(v.username, v._id);
+                      fetchMessages(v.username, v._id);
                     }}
                   >
                     <FriendCard
@@ -208,6 +238,7 @@ function Chat() {
                   </Box>
                 );
               })}
+
               {/* {Array(50)
                 .fill("Daniel")
                 .map((v, i) => {
@@ -255,10 +286,28 @@ function Chat() {
               }}
             >
               <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
-                {Array(50)
+                {messageData[chatData.id] === undefined
+                  ? ""
+                  : messageData[chatData.id].map((v, i) => {
+                      return (
+                        <Box key={i}>
+                          <MessageCard
+                            num={i}
+                            message={v.content}
+                            name={v.sender.username}
+                            id={v._id}
+                            updated={v.updatedAt}
+                            time={v.createdAt}
+                            isUser={v.sender._id === userData._id}
+                          />
+                        </Box>
+                      );
+                    })}
+                {/* {Array(50)
                   .fill("dani")
                   .map((val, i) => {
                     return (
+                      <Box key={i}>
                       <MessageCard
                         id={i}
                         name={val}
@@ -268,8 +317,9 @@ function Chat() {
                         time={"19-12-22 11:23PM"}
                         isUser={Math.random() < 0.5}
                       />
+                      </Box>
                     );
-                  })}
+                  })} */}
               </Flex>
             </Box>
             <MessageBox />

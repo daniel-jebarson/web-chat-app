@@ -7,11 +7,14 @@ export default function (props) {
   return (
     <Flex
       key={props.id}
+      justifyContent={"space-between"}
       flexDirection={props.isUser ? "row" : "row-reverse"}
       px={"4"}
     >
       <Box width={"36%"}></Box>
       <Flex
+        minW={"40%"}
+        // w={"100%"}
         px={"2"}
         py={"2"}
         mt={"4"}
@@ -75,7 +78,8 @@ export default function (props) {
             flexDirection={props.isUser ? "row" : "row-reverse"}
           >
             <Text color={"white"} fontSize="11" position={"relative"} right="1">
-              {props.time}
+              {/* {props.time} */}
+              {props.updated}
             </Text>
             {props.isUser ? (
               <Box>

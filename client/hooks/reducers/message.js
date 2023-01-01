@@ -21,7 +21,7 @@ export function messageReducer(messages = {}, action) {
       return messages;
 
     case actiontypes.ADD_USER_MESSAGE:
-      messages[action.id] = action.messages;
+      messages[action.id] = [...action.messages];
       return messages;
 
     case actiontypes.REMOVE_USER_MESSAGE:

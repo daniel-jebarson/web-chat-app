@@ -24,11 +24,11 @@ export const EDIT_MESSAGE = (message, receiver, index) => {
   };
 };
 
-export const ADD_USER_MESSAGE = (receiver, messages) => {
+export const ADD_USER_MESSAGE = (id, messages) => {
   return {
     type: actiontypes.ADD_USER_MESSAGE,
     messages: messages,
-    receiver: receiver,
+    id: id,
   };
 };
 

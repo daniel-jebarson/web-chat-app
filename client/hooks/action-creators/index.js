@@ -45,9 +45,9 @@ export const SETCHAT = (username,id) => {
   };
 };
 
-export const ADDUSERMESSAGE = (receiver, messages) => {
+export const ADDUSERMESSAGE = (id, messages) => {
   return (dispatch) => {
-    dispatch(ADD_USER_MESSAGE(receiver, messages));
+    dispatch(ADD_USER_MESSAGE(id, messages));
   };
 };
 
