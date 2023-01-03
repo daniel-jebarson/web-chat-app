@@ -226,13 +226,13 @@ function Chat() {
                   <Box
                     key={i}
                     onClick={() => {
-                      SETCHAT(v.username, v._id);
-                      fetchMessages(v.username, v._id);
+                      SETCHAT(v.username, v.chatId);
+                      fetchMessages(v.username, v.chatId);
                     }}
                   >
                     <FriendCard
                       name={v.username}
-                      id={v._id}
+                      id={v.chatId}
                       select={chatData.id}
                     />
                   </Box>
