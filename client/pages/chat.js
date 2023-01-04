@@ -29,7 +29,7 @@ import { io } from "socket.io-client";
 // socket.emit("login", "dani" + Math.random());
 
 const ENDPOINT = "http://localhost:5000";
-var socket, selectedSocketCompare;
+var socket, selectedChatCompare;
 
 function Chat() {
   const toast = useToast();
@@ -48,13 +48,18 @@ function Chat() {
 
   const [socketConnected, setSocketConnected] = useState(false);
 
-  const fetchMessages = async (username, id) => {
+  const fetchMessages = async (username = chatData.name, id = chatData.id) => {
+    if (chatData.id == -1) return;
     try {
+      // const { name: username, id } = chatData;
+      // let username=chatData.name
+      // let id=cha
       const config = {
         headers: {
           authorization: `Bearer ${userData.token}`,
         },
       };
+
       let { data } = await Axios.post(
         `http://localhost:5000/message/${id}`,
         {},
@@ -118,22 +123,22 @@ function Chat() {
     }
 
     fetchChatList(data);
-    socket = io(ENDPOINT);
+  }, []);
+
+  useEffect(() => {
+    socket = io(ENDPOINT, { transports: ["websocket"] });
 
     socket.emit("setup", JSON.parse(localStorage.getItem("userInfo")));
-    socket.on("connection", () => {
+    socket.on("connected", () => {
       setSocketConnected(true);
+      console.log("connected to socket");
     });
   }, []);
 
-  
-
-  // useEffect =
-  //   (() => {
-  //     fetchMessages(chatData.name, chatData.id);
-  //     selectedSocketCompare = chatData;
-  //   },
-  //   [chatData]);
+  useEffect(() => {
+    fetchMessages();
+    selectedChatCompare = chatData;
+  }, [chatData]);
 
   // useEffect(() => {
   //   socket = io(ENDPOINT);
@@ -147,6 +152,32 @@ function Chat() {
   async function sleep(milliseconds) {
     return await new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
+
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      console.log("message came");
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare.id !== newMessageReceived.chat._id
+      ) {
+        //give notifs
+        console.log("ok");
+      } else {
+        console.log("new message");
+        console.log(newMessageReceived);
+        dispatch({
+          type: "ADD_MESSAGE",
+          message: newMessageReceived,
+          id: newMessageReceived.chat._id,
+        });
+        // console.log(data);
+        // SETCHAT(
+        //   newMessageReceived.sender.username,
+        //   newMessageReceived.chat._id
+        // );
+      }
+    });
+  });
 
   const logOut = async () => {
     localStorage.clear();
@@ -257,9 +288,12 @@ function Chat() {
                   <Box
                     key={i}
                     onClick={() => {
-                      SETCHAT(v.username, v.chatId);
-                      fetchMessages(v.username, v.chatId);
                       socket.emit("join chat", v.chatId);
+                      fetchMessages(v.username, v.chatId);
+                      SETCHAT(v.username, v.chatId);
+                      
+
+                      // fetchMessages();
                     }}
                   >
                     <FriendCard
@@ -354,7 +388,7 @@ function Chat() {
                   })} */}
               </Flex>
             </Box>
-            <MessageBox />
+            <MessageBox socket={socket} />
           </Box>
         )}
       </Flex>

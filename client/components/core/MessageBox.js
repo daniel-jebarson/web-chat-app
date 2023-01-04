@@ -14,10 +14,10 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../hooks";
 import Axios from "axios";
 // import { socket } from "../../util/socket";
-function MessageBox() {
+function MessageBox({ socket }) {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { SETCHAT } = bindActionCreators(actionCreators, dispatch);
+  const { SETCHAT, ADDMESSAGE } = bindActionCreators(actionCreators, dispatch);
   const [search, setSearch] = useState("");
   const chatData = useSelector((state) => state.chat);
   const handleEnter = (e) => {
@@ -48,11 +48,14 @@ function MessageBox() {
         message: data,
         id: chatData.id,
       });
-      console.log(data);
+      // ADDMESSAGE(data, chatData.id);
+      socket.emit("new message", data);
+      // console.log(data);
       SETCHAT(name, id);
       // console.log(data);
       setSearch("");
     } catch (err) {
+      console.log(err);
       toast({
         title: "Failed to send message!",
         description: err.response.data.msg,

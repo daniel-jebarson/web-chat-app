@@ -13,9 +13,6 @@ export function chatReducer(
         id: action.id,
       });
     default:
-      return (chat = {
-        name: "",
-        id: -1,
-      });
+      return chat;
   }
 }

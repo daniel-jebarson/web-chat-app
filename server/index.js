@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
   console.log("connected to socket.io");
 
   socket.on("setup", (userData) => {
-    // console.log(userData);
+    console.log("user setup room:"+userData._id);
     socket.join(userData._id);
     // console.log(userData._id);
     socket.emit("connected");
@@ -70,8 +70,17 @@ io.on("connection", (socket) => {
     console.log("User joined room:" + room);
   });
 
-  socket.on("new message", (newMessage) => {
-    var chat = newMessage.chat;
-    if (!chat.users) return "chat.users not defined";
+  socket.on("new message", (newMessageRecieved) => {
+    // console.log(newMessageRecieved);
+    var chat = newMessageRecieved.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      if (user._id == newMessageRecieved.sender._id) return;
+      // console.log("message came here to backend");
+      socket.in(user._id).emit("message recieved", newMessageRecieved);
+      // socket.in(chat._id).emit("message received", newMessageRecieved);
+    });
   });
 });
