@@ -28,8 +28,12 @@ import { io } from "socket.io-client";
 // const socket = io("http://localhost:5000");
 // socket.emit("login", "dani" + Math.random());
 
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedSocketCompare;
+
 function Chat() {
   const toast = useToast();
+
   const dispatch = useDispatch();
   const { SETCHAT, SETUSER, SETFRIENDS, ADDUSERMESSAGE } = bindActionCreators(
     actionCreators,
@@ -41,6 +45,8 @@ function Chat() {
   const friendData = useSelector((state) => state.friends);
   const userData = useSelector((state) => state.user);
   const messageData = useSelector((state) => state.messages);
+
+  const [socketConnected, setSocketConnected] = useState(false);
 
   const fetchMessages = async (username, id) => {
     try {
@@ -57,6 +63,7 @@ function Chat() {
       // console.log(data);
       ADDUSERMESSAGE(id, data);
       SETCHAT(username, id);
+      socket.emit("join chat", id);
     } catch (err) {
       // console.log(err);
       toast({
@@ -111,7 +118,31 @@ function Chat() {
     }
 
     fetchChatList(data);
+    socket = io(ENDPOINT);
+
+    socket.emit("setup", JSON.parse(localStorage.getItem("userInfo")));
+    socket.on("connection", () => {
+      setSocketConnected(true);
+    });
   }, []);
+
+  
+
+  // useEffect =
+  //   (() => {
+  //     fetchMessages(chatData.name, chatData.id);
+  //     selectedSocketCompare = chatData;
+  //   },
+  //   [chatData]);
+
+  // useEffect(() => {
+  //   socket = io(ENDPOINT);
+
+  //   socket.emit("setup", JSON.parse(localStorage.getItem("userInfo")));
+  //   socket.on("connection", () => {
+  //     setSocketConnected(true);
+  //   });
+  // }, []);
 
   async function sleep(milliseconds) {
     return await new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -228,6 +259,7 @@ function Chat() {
                     onClick={() => {
                       SETCHAT(v.username, v.chatId);
                       fetchMessages(v.username, v.chatId);
+                      socket.emit("join chat", v.chatId);
                     }}
                   >
                     <FriendCard
