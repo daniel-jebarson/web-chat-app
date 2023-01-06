@@ -58,7 +58,8 @@ export default function (props) {
               top={"0"}
               color={"white"}
             >
-              {props.time}
+            { new Date(props.time).toLocaleString()}
+              {/* {props.time} */}
             </Text>
           </Flex>
           <Flex>
@@ -79,7 +80,8 @@ export default function (props) {
           >
             <Text color={"white"} fontSize="11" position={"relative"} right="1">
               {/* {props.time} */}
-              {props.updated}
+             { new Date(props.updated).toLocaleString()}
+              
             </Text>
             {props.isUser ? (
               <Box>
