@@ -51,9 +51,9 @@ export const ADDUSERMESSAGE = (id, messages) => {
   };
 };
 
-export const REMOVEUSERMESSAGE = (receiver) => {
+export const REMOVEUSERMESSAGE = (id) => {
   return (dispatch) => {
-    dispatch(REMOVE_USER_MESSAGE(receiver));
+    dispatch(REMOVE_USER_MESSAGE(id));
   };
 };
 

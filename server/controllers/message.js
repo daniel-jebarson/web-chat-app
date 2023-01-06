@@ -41,11 +41,19 @@ const messageSender = asyncHandler(async (req, res) => {
 
 const getAllMessages = asyncHandler(async (req, res) => {
   try {
-    const {id} = req.params;
-    let data=await MessageModel.find({chat:id}).populate("sender", "username image").populate("chat");
-    res.status(200).json(data)
-
+    const { id } = req.params;
+    let data = await MessageModel.find({ chat: id });
+    if (data.length === 0) {
+      res.status(200).json(data);
+      return;
+    }
+    // console.log(data);
+    data = await MessageModel.find({ chat: id })
+      .populate("sender", "username image")
+      .populate("chat");
+    res.status(200).json(data);
   } catch (err) {
+    console.log(err);
     throw new CustomError("Unable to fetch messages", 400);
   }
 });

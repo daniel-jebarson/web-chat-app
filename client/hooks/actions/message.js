@@ -32,9 +32,9 @@ export const ADD_USER_MESSAGE = (id, messages) => {
   };
 };
 
-export const REMOVE_USER_MESSAGE = (receiver) => {
+export const REMOVE_USER_MESSAGE = (id) => {
   return {
-    type: actiontypes.EDIT_MESSAGE,
-    receiver: receiver,
+    type: actiontypes.REMOVE_USER_MESSAGE,
+    id:id,
   };
 };

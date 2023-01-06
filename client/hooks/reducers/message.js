@@ -5,10 +5,10 @@ export function messageReducer(messages = {}, action) {
       // messages = [...messages, action.message];
       if (messages.hasOwnProperty(action.id)) {
         messages[action.id] = [...messages[action.id], action.message];
-        console.log("old");
+        // console.log("old");
       } else {
         messages[action.id] = [action.message];
-        console.log("new");
+        // console.log("new");
       }
       return messages;
 
@@ -21,7 +21,8 @@ export function messageReducer(messages = {}, action) {
       return messages;
 
     case actiontypes.ADD_USER_MESSAGE:
-      messages[action.id] = [...action.messages];
+      messages[action.id] =
+        action.messages.length === 0 ? [] : [...action.messages];
       return messages;
 
     case actiontypes.REMOVE_USER_MESSAGE:

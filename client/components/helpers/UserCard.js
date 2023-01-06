@@ -31,6 +31,7 @@ function UserCard({ gmail, username, data: user_Data }) {
         position: "bottom",
       });
       ADDFRIEND(user_Data);
+      window.location.href = "/chat";
     } catch (err) {
       toast({
         title: "Error occured!",

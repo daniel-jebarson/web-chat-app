@@ -31,7 +31,10 @@ function Navbar(props) {
     : `${spin} infinite 20s linear`;
   const dispatch = useDispatch();
   // const chatData = useSelector((state) => state.chat);
-  const { REMOVEFRIEND } = bindActionCreators(actionCreators, dispatch);
+  const { REMOVEFRIEND, REMOVEUSERMESSAGE, SETCHAT } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
   const removeFriend = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -47,7 +50,6 @@ function Navbar(props) {
 
         config
       );
-      
 
       toast({
         title: "Chat deleted successfully!",
@@ -59,7 +61,8 @@ function Navbar(props) {
       });
 
       REMOVEFRIEND(props.name);
-
+      REMOVEUSERMESSAGE(props.id);
+      SETCHAT("", -1);
       console.log(props.name + props.id + " removed success");
     } catch (err) {
       console.log(err);

@@ -25,7 +25,7 @@ import PorfileView from "../components/views/ProfileView";
 import Axios from "axios";
 import { io } from "socket.io-client";
 import ScrollableFeed from "react-scrollable-feed";
-import chatLoader from "../components/animation/ChatLoader";
+import ChatLoader from "../components/animation/ChatLoader";
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -65,12 +65,12 @@ function Chat() {
         {},
         config
       );
-      // console.log(data);
+      console.log(data);
       ADDUSERMESSAGE(id, data);
       SETCHAT(username, id);
       socket.emit("join chat", id);
     } catch (err) {
-      // console.log(err);
+      console.log(err);
       toast({
         title: "Failed to fetch messages!",
         description: err.response.data.msg,
@@ -294,7 +294,7 @@ function Chat() {
               <ScrollableFeed forceScroll={"false"}>
                 <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
                   {messageData[chatData.id] === undefined ? (
-                    <chatLoader number={15}/>
+                    <chatLoader number={15} />
                   ) : (
                     messageData[chatData.id].map((v, i) => {
                       return (
