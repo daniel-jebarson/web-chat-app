@@ -30,22 +30,24 @@ function Navbar(props) {
     ? undefined
     : `${spin} infinite 20s linear`;
   const dispatch = useDispatch();
+  // const chatData = useSelector((state) => state.chat);
   const { REMOVEFRIEND } = bindActionCreators(actionCreators, dispatch);
   const removeFriend = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("userInfo"));
-      console.log(user.token);
+      // console.log(props);
       const config = {
         headers: {
           authorization: `Bearer ${user.token}`,
         },
-        data: { userId: props.id },
+        data: { chatId: props.id },
       };
       const { data } = await Axios.delete(
         `http://localhost:5000/chat`,
 
         config
       );
+      
 
       toast({
         title: "Chat deleted successfully!",
@@ -60,6 +62,7 @@ function Navbar(props) {
 
       console.log(props.name + props.id + " removed success");
     } catch (err) {
+      console.log(err);
       toast({
         title: "Error occured!",
         description: `Failed to delete chat of ${props.name}`,

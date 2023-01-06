@@ -6,6 +6,7 @@ import {
   Stack,
   IconButton,
   Icon,
+  Spinner,
   useToast,
 } from "@chakra-ui/react";
 import MessageBox from "../components/core/MessageBox";
@@ -24,6 +25,7 @@ import PorfileView from "../components/views/ProfileView";
 import Axios from "axios";
 import { io } from "socket.io-client";
 import ScrollableFeed from "react-scrollable-feed";
+import chatLoader from "../components/animation/ChatLoader";
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -291,23 +293,25 @@ function Chat() {
             >
               <ScrollableFeed forceScroll={"false"}>
                 <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
-                  {messageData[chatData.id] === undefined
-                    ? ""
-                    : messageData[chatData.id].map((v, i) => {
-                        return (
-                          <Box key={i}>
-                            <MessageCard
-                              num={i}
-                              message={v.content}
-                              name={v.sender.username}
-                              id={v._id}
-                              updated={v.updatedAt}
-                              time={v.createdAt}
-                              isUser={v.sender._id === userData._id}
-                            />
-                          </Box>
-                        );
-                      })}
+                  {messageData[chatData.id] === undefined ? (
+                    <chatLoader number={15}/>
+                  ) : (
+                    messageData[chatData.id].map((v, i) => {
+                      return (
+                        <Box key={i}>
+                          <MessageCard
+                            num={i}
+                            message={v.content}
+                            name={v.sender.username}
+                            id={v._id}
+                            updated={v.updatedAt}
+                            time={v.createdAt}
+                            isUser={v.sender._id === userData._id}
+                          />
+                        </Box>
+                      );
+                    })
+                  )}
                 </Flex>
               </ScrollableFeed>
             </Box>

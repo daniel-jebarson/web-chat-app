@@ -2,25 +2,27 @@ const asyncHandler = require("express-async-handler");
 const { CustomError } = require("../error/custom");
 const ChatModel = require("../models/Chat");
 const UserModel = require("../models/User");
+const MessageModel = require("../models/Message");
 
 const deleteChat = asyncHandler(async (req, res) => {
-  const { userId } = req.body;
-  if (!userId) {
+  const { chatId } = req.body;
+  // console.log(req.user._id);
+  if (!chatId) {
     throw new CustomError("UserId param not found", 400);
   }
   try {
-    let isDeleted = await ChatModel.deleteOne({
+
+    let isDeleted = await MessageModel.deleteMany({
       isGroupChat: false,
-      $and: [
-        {
-          users: { $elemMatch: { $eq: req.user._id } },
-        },
-        {
-          users: { $elemMatch: { $eq: userId } },
-        },
-      ],
+      chat: chatId,
     });
-    if (isDeleted.deletedCount) {
+
+    console.log("Number of messages deleted : " + isDeleted.deletedCount);
+    isDeleted = await ChatModel.deleteOne({
+      isGroupChat: false,
+      _id: chatId,
+    });
+    if (isDeleted) {
       res.status(200).json({
         success: true,
         msg: "Deletion success",

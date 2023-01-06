@@ -12,10 +12,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-function chatLoader() {
+function chatLoader({number}) {
   return (
     <Stack mt={"3"}>
-      {Array(5)
+      {Array(number||5 )
         .fill("_")
         .map((_) => {
           return (
