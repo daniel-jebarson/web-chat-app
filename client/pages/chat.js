@@ -23,7 +23,7 @@ import OverlayChat from "../components/misc/OverlayChat";
 import PorfileView from "../components/views/ProfileView";
 import Axios from "axios";
 import { io } from "socket.io-client";
-
+import ScrollableFeed from "react-scrollable-feed";
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -52,7 +52,6 @@ function Chat() {
   const fetchMessages = async (username = chatData.name, id = chatData.id) => {
     if (chatData.id == -1) return;
     try {
-      
       const config = {
         headers: {
           authorization: `Bearer ${userData.token}`,
@@ -139,8 +138,6 @@ function Chat() {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
-
-
   async function sleep(milliseconds) {
     return await new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
@@ -163,10 +160,9 @@ function Chat() {
           id: newMessageReceived.chat._id,
         });
         fetchMessages();
- 
       }
     });
-  }, );
+  });
 
   const logOut = async () => {
     localStorage.clear();
@@ -181,9 +177,6 @@ function Chat() {
     await sleep(2500);
     window.location.href = "./";
   };
-
-
-
 
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
@@ -213,7 +206,6 @@ function Chat() {
             bgColor={"#23272A"}
             borderRight={"1px solid #2D3748"}
           >
-          
             <PorfileView username={userData.username} gmail={userData.gmail} />
             <Stack isInline>
               <IconButton
@@ -255,8 +247,6 @@ function Chat() {
                         name: v.username,
                         id: v.chatId,
                       };
-
-                    
                     }}
                   >
                     <FriendCard
@@ -267,8 +257,6 @@ function Chat() {
                   </Box>
                 );
               })}
-
-          
             </Flex>
           </Flex>
         </Flex>
@@ -296,30 +284,32 @@ function Chat() {
                 "&::-webkit-scrollbar": {
                   display: "none",
                 },
+
                 msOverflowStyle: "none",
                 scrollbarWidth: "none",
               }}
             >
-              <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
-                {messageData[chatData.id] === undefined
-                  ? ""
-                  : messageData[chatData.id].map((v, i) => {
-                      return (
-                        <Box key={i}>
-                          <MessageCard
-                            num={i}
-                            message={v.content}
-                            name={v.sender.username}
-                            id={v._id}
-                            updated={v.updatedAt}
-                            time={v.createdAt}
-                            isUser={v.sender._id === userData._id}
-                          />
-                        </Box>
-                      );
-                    })}
-             
-              </Flex>
+              <ScrollableFeed forceScroll={"false"}>
+                <Flex flexDirection={"column"} px={"2"} pt={"4"} pb={"1"}>
+                  {messageData[chatData.id] === undefined
+                    ? ""
+                    : messageData[chatData.id].map((v, i) => {
+                        return (
+                          <Box key={i}>
+                            <MessageCard
+                              num={i}
+                              message={v.content}
+                              name={v.sender.username}
+                              id={v._id}
+                              updated={v.updatedAt}
+                              time={v.createdAt}
+                              isUser={v.sender._id === userData._id}
+                            />
+                          </Box>
+                        );
+                      })}
+                </Flex>
+              </ScrollableFeed>
             </Box>
             <MessageBox socket={socket} />
           </Box>
