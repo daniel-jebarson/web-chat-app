@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
-// const http = require("http");
-// const server = http.createServer(app);
 const logHandler = require("./middleware/logs/log");
-const connectSocket = require("./controllers/socket");
+// const connectSocket = require("./controllers/socket");
 require("dotenv").config();
 const NotFound = require("./middleware/handler/404");
 const errorHandler = require("./middleware/handler/errorHandler");
@@ -59,7 +57,7 @@ io.on("connection", (socket) => {
   console.log("connected to socket.io");
 
   socket.on("setup", (userData) => {
-    console.log("user setup room:"+userData._id);
+    console.log("user setup room:" + userData._id);
     socket.join(userData._id);
     // console.log(userData._id);
     socket.emit("connected");
@@ -79,8 +77,8 @@ io.on("connection", (socket) => {
     chat.users.forEach((user) => {
       if (user._id == newMessageRecieved.sender._id) return;
       // console.log("message came here to backend");
-      socket.in(user._id).emit("message recieved", newMessageRecieved);
-      // socket.in(chat._id).emit("message received", newMessageRecieved);
+      // socket.in(user._id).emit("message recieved", newMessageRecieved);
+      socket.in(chat._id).emit("message received", newMessageRecieved);
     });
   });
 });

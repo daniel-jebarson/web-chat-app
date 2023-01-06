@@ -23,13 +23,14 @@ import OverlayChat from "../components/misc/OverlayChat";
 import PorfileView from "../components/views/ProfileView";
 import Axios from "axios";
 import { io } from "socket.io-client";
-// import { socket } from "../util/socket";
-// import { socket } from "../util/socket";
-// const socket = io("http://localhost:5000");
-// socket.emit("login", "dani" + Math.random());
+
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
+var selectedChat = {
+  name: "",
+  id: -1,
+};
 
 function Chat() {
   const toast = useToast();
@@ -51,9 +52,7 @@ function Chat() {
   const fetchMessages = async (username = chatData.name, id = chatData.id) => {
     if (chatData.id == -1) return;
     try {
-      // const { name: username, id } = chatData;
-      // let username=chatData.name
-      // let id=cha
+      
       const config = {
         headers: {
           authorization: `Bearer ${userData.token}`,
@@ -136,18 +135,11 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    fetchMessages();
-    selectedChatCompare = chatData;
-  }, [chatData]);
+    fetchMessages(selectedChat.name, selectedChat.id);
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
 
-  // useEffect(() => {
-  //   socket = io(ENDPOINT);
 
-  //   socket.emit("setup", JSON.parse(localStorage.getItem("userInfo")));
-  //   socket.on("connection", () => {
-  //     setSocketConnected(true);
-  //   });
-  // }, []);
 
   async function sleep(milliseconds) {
     return await new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -170,14 +162,11 @@ function Chat() {
           message: newMessageReceived,
           id: newMessageReceived.chat._id,
         });
-        // console.log(data);
-        // SETCHAT(
-        //   newMessageReceived.sender.username,
-        //   newMessageReceived.chat._id
-        // );
+        fetchMessages();
+ 
       }
     });
-  });
+  }, );
 
   const logOut = async () => {
     localStorage.clear();
@@ -193,30 +182,9 @@ function Chat() {
     window.location.href = "./";
   };
 
-  // useEffect(() => {
-  //   const socket = io("http://localhost:5000");
-  //   // socket.emit("login", "dani" + Math.random());
-  //   // console.log("ok");
-  // }, [true]);
-  // useEffect(() => {
-  //   socket.on("online", (data) => {
-  //     console.log(data);
-  //   });
-  // }, [socket]);
-  // useEffect(() => {
-  //   const newSocket = io("http://localhost:5000");
-  //   setSocket(newSocket);
-  //   try {
-  //     return socket.disconnect();
-  //   } catch {
-  //     return "ok";
-  //   }
-  // }, []);
 
-  // useEffect(() => {
-  //   socket.emit("logine", { value: "dani" + Math.random() });
-  //   console.log("ok");
-  // }, [socket]);
+
+
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
       <Box maxW="fit-content" p="0" m="0">
@@ -245,15 +213,7 @@ function Chat() {
             bgColor={"#23272A"}
             borderRight={"1px solid #2D3748"}
           >
-            {/* <Avatar
-              cursor={"pointer"}
-              onClick={() => {
-                console.log("ok");
-              }}
-              src={
-                "https://lh3.googleusercontent.com/a/AEdFTp7kiDrC2tOsV1S8_g-WJXQlmhRAFFZCYskUxGsYFA=s96-c"
-              }
-            /> */}
+          
             <PorfileView username={userData.username} gmail={userData.gmail} />
             <Stack isInline>
               <IconButton
@@ -291,9 +251,12 @@ function Chat() {
                       socket.emit("join chat", v.chatId);
                       fetchMessages(v.username, v.chatId);
                       SETCHAT(v.username, v.chatId);
-                      
+                      selectedChat = {
+                        name: v.username,
+                        id: v.chatId,
+                      };
 
-                      // fetchMessages();
+                    
                     }}
                   >
                     <FriendCard
@@ -305,21 +268,7 @@ function Chat() {
                 );
               })}
 
-              {/* {Array(50)
-                .fill("Daniel")
-                .map((v, i) => {
-                  return (
-                    <Box
-                      key={i}
-                      onClick={() => {
-                        SETCHAT(v, i);
-                      }}
-                    >
-                      {" "}
-                      <FriendCard name={v} id={i} select={chatData.id} />
-                    </Box>
-                  );
-                })} */}
+          
             </Flex>
           </Flex>
         </Flex>
@@ -369,23 +318,7 @@ function Chat() {
                         </Box>
                       );
                     })}
-                {/* {Array(50)
-                  .fill("dani")
-                  .map((val, i) => {
-                    return (
-                      <Box key={i}>
-                      <MessageCard
-                        id={i}
-                        name={val}
-                        message={
-                          "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
-                        }
-                        time={"19-12-22 11:23PM"}
-                        isUser={Math.random() < 0.5}
-                      />
-                      </Box>
-                    );
-                  })} */}
+             
               </Flex>
             </Box>
             <MessageBox socket={socket} />
