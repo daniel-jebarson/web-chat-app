@@ -300,7 +300,7 @@ function Chat() {
                       return (
                         <Box key={i}>
                           <MessageCard
-                            num={i} 
+                            num={i} isDeleted={v.isDeleted}
                             message={v.content}
                             name={v.sender.username}
                             id={v._id}

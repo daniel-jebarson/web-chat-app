@@ -8,10 +8,10 @@ export const ADD_MESSAGE = (message, id) => {
   };
 };
 
-export const DELETE_MESSAGE = (receiver, index) => {
+export const DELETE_MESSAGE = (id, index) => {
   return {
     type: actiontypes.DELETE_MESSAGE,
-    receiver: receiver,
+    id: id,
     index: index,
   };
 };

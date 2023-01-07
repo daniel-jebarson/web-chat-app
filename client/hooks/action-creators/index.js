@@ -27,9 +27,9 @@ export const ADDMESSAGE = (message, id) => {
   };
 };
 
-export const DELETEMESSAGE = (receiver, index) => {
+export const DELETEMESSAGE = (chatId, index) => {
   return (dispatch) => {
-    dispatch(DELETE_MESSAGE(receiver, index));
+    dispatch(DELETE_MESSAGE(chatId, index));
   };
 };
 

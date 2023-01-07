@@ -13,7 +13,7 @@ export function messageReducer(messages = {}, action) {
       return messages;
 
     case actiontypes.DELETE_MESSAGE:
-      messages[action.id][action.index][isDeleted] = true;
+      messages[action.id][action.index]["isDeleted"] = true;
       return messages;
 
     case actiontypes.EDIT_MESSAGE:

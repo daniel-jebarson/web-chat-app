@@ -28,6 +28,25 @@ const editMessage = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteMessage=asyncHandler(async(req,res)=>{
+  const { id } = req.params;
+
+  try {
+    const data = await MessageModel.findByIdAndUpdate(
+      id,
+      {
+        isDeleted: true,
+      },
+      { new: true }
+    )
+      .populate("sender", "username image")
+      .populate("chat");
+    res.status(200).json(data);
+  } catch (err) {
+    throw new CustomError("Unable to delete message", 400);
+  }
+})
+
 const messageSender = asyncHandler(async (req, res) => {
   const { content, chatId } = req.body;
 
@@ -86,4 +105,5 @@ module.exports = {
   messageSender,
   getAllMessages,
   editMessage,
+  deleteMessage
 };
