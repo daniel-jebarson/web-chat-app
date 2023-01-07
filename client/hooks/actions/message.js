@@ -15,11 +15,11 @@ export const DELETE_MESSAGE = (receiver, index) => {
     index: index,
   };
 };
-export const EDIT_MESSAGE = (message, receiver, index) => {
+export const EDIT_MESSAGE = (message, chatId, index) => {
   return {
     type: actiontypes.EDIT_MESSAGE,
     message: message,
-    receiver: receiver,
+    id: chatId,
     index: index,
   };
 };

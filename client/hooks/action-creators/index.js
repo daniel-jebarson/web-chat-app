@@ -33,9 +33,9 @@ export const DELETEMESSAGE = (receiver, index) => {
   };
 };
 
-export const EDITMESSAGE = (message, receiver, index) => {
+export const EDITMESSAGE = (message, chatId, index) => {
   return (dispatch) => {
-    dispatch(EDIT_MESSAGE(message, receiver, index));
+    dispatch(EDIT_MESSAGE(message, chatId, index));
   };
 };
 

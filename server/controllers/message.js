@@ -3,7 +3,31 @@ const { CustomError } = require("../error/custom");
 const MessageModel = require("../models/Message");
 const UserModel = require("../models/User");
 const ChatModel = require("../models/Chat");
-const chats = require("../data/data");
+// const chats = require("../data/data");
+
+const editMessage = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { content } = req.body;
+
+  if (!content) {
+    throw new CustomError("Invalid data", 400);
+  }
+  try {
+    const data = await MessageModel.findByIdAndUpdate(
+      id,
+      {
+        content: content,
+      },
+      { new: true }
+    )
+      .populate("sender", "username image")
+      .populate("chat");
+    res.status(200).json(data);
+  } catch (err) {
+    throw new CustomError("Unable to edit message", 400);
+  }
+});
+
 const messageSender = asyncHandler(async (req, res) => {
   const { content, chatId } = req.body;
 
@@ -61,4 +85,5 @@ const getAllMessages = asyncHandler(async (req, res) => {
 module.exports = {
   messageSender,
   getAllMessages,
+  editMessage,
 };
