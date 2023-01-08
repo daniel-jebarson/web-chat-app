@@ -68,6 +68,32 @@ io.on("connection", (socket) => {
     console.log("User joined room:" + room);
   });
 
+  socket.on("edit message",(editedMessage)=>{
+    var chat = editedMessage.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      if (user._id == editedMessage.sender._id) return;
+      // console.log("message came here to backend");
+      // socket.in(user._id).emit("message recieved", newMessageRecieved);
+      socket.in(chat._id).emit("update edited", editedMessage);
+    });
+  })
+
+  socket.on("delete message",(deletedMessage)=>{
+    var chat = deletedMessage.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      if (user._id == deletedMessage.sender._id) return;
+      // console.log("message came here to backend");
+      // socket.in(user._id).emit("message recieved", newMessageRecieved);
+      socket.in(chat._id).emit("update deleted", deletedMessage);
+    });
+  })
+
   socket.on("new message", (newMessageRecieved) => {
     // console.log(newMessageRecieved);
     var chat = newMessageRecieved.chat;

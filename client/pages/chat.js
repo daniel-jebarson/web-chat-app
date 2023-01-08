@@ -38,10 +38,14 @@ function Chat() {
   const toast = useToast();
 
   const dispatch = useDispatch();
-  const { SETCHAT, SETUSER, SETFRIENDS, ADDUSERMESSAGE } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const {
+    SETCHAT,
+    SETUSER,
+    SETFRIENDS,
+    ADDUSERMESSAGE,
+    EDITMESSAGE,
+    DELETEMESSAGE,
+  } = bindActionCreators(actionCreators, dispatch);
 
   // const [socket, setSocket] = useState(null);
   const chatData = useSelector((state) => state.chat);
@@ -145,17 +149,49 @@ function Chat() {
   }
 
   useEffect(() => {
+    socket.on("update deleted", (deletedMessage) => {
+      // console.log("message came");
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare.id !== deletedMessage.chat._id
+      ) {
+        //give notifs
+        console.log("notifs");
+      } else {
+        // console.log("deleted message");
+        // console.log(deletedMessage);
+        DELETEMESSAGE(deletedMessage.chat._id, deletedMessage.num);
+         fetchMessages();
+      }
+    });
+
+    socket.on("update edited", (editedMessage) => {
+      // console.log("message came");
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare.id !== editedMessage.chat._id
+      ) {
+        //give notifs
+        console.log("notifs");
+      } else {
+        // console.log("edited message");
+        // console.log(editedMessage);
+        EDITMESSAGE(editedMessage, editedMessage.chat._id, editedMessage.num);
+        fetchMessages();
+      }
+    });
+
     socket.on("message received", (newMessageReceived) => {
-      console.log("message came");
+      // console.log("message came");
       if (
         !selectedChatCompare ||
         selectedChatCompare.id !== newMessageReceived.chat._id
       ) {
         //give notifs
-        console.log("ok");
+        console.log("notifs");
       } else {
-        console.log("new message");
-        console.log(newMessageReceived);
+        // console.log("new message");
+        // console.log(newMessageReceived);
         dispatch({
           type: "ADD_MESSAGE",
           message: newMessageReceived,
@@ -300,7 +336,9 @@ function Chat() {
                       return (
                         <Box key={i}>
                           <MessageCard
-                            num={i} isDeleted={v.isDeleted}
+                            socket={socket}
+                            num={i}
+                            isDeleted={v.isDeleted}
                             message={v.content}
                             name={v.sender.username}
                             id={v._id}

@@ -48,6 +48,9 @@ export default function (props) {
   
         setisDeleted(true);
         DELETEMESSAGE(chatData.id, props.num);
+        let temp=data;
+      temp["num"]=props.num;
+      props.socket.emit("delete message",temp);
         toast({
           title: "Message deleted!",
           status: "success",
@@ -100,6 +103,9 @@ export default function (props) {
       // console.log(message);
       setUpdated(message.updatedAt);
       EDITMESSAGE(message, chatData.id, props.num);
+      let temp=message;
+      temp["num"]=props.num;
+      props.socket.emit("edit message",temp);
       toast({
         title: "Message updated!",
         status: "success",
