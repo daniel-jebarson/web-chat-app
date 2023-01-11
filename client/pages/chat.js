@@ -161,7 +161,7 @@ function Chat() {
         // console.log("deleted message");
         // console.log(deletedMessage);
         DELETEMESSAGE(deletedMessage.chat._id, deletedMessage.num);
-         fetchMessages();
+        fetchMessages();
       }
     });
 

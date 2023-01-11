@@ -7,7 +7,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,32 +25,34 @@ export default function (props) {
     actionCreators,
     dispatch
   );
+  useEffect(() => {
+    setText(props.message);
+    setUpdated(props.updated);
+    setisDeleted(props.isDeleted);
+  }, [props]);
   const userData = useSelector((state) => state.user);
   const chatData = useSelector((state) => state.chat);
   const [editing, setEditing] = useState(false);
   const [isDeleted, setisDeleted] = useState(props.isDeleted);
 
   const handleDelete = async () => {
-    try{
-
+    try {
       const config = {
         headers: {
           authorization: `Bearer ${userData.token}`,
         },
-       
       };
       const { data } = await Axios.delete(
         `http://localhost:5000/message/${props.id}`,
-  
+
         config
       );
-      if(data){
-  
+      if (data) {
         setisDeleted(true);
         DELETEMESSAGE(chatData.id, props.num);
-        let temp=data;
-      temp["num"]=props.num;
-      props.socket.emit("delete message",temp);
+        let temp = data;
+        temp["num"] = props.num;
+        props.socket.emit("delete message", temp);
         toast({
           title: "Message deleted!",
           status: "success",
@@ -58,7 +60,7 @@ export default function (props) {
           isClosable: true,
           position: "bottom",
         });
-      }else{
+      } else {
         toast({
           title: "Failed to delete message!",
           status: "error",
@@ -67,8 +69,7 @@ export default function (props) {
           position: "bottom",
         });
       }
-
-    }catch(err){
+    } catch (err) {
       console.log(err);
       toast({
         title: "Failed to delete message!",
@@ -103,9 +104,9 @@ export default function (props) {
       // console.log(message);
       setUpdated(message.updatedAt);
       EDITMESSAGE(message, chatData.id, props.num);
-      let temp=message;
-      temp["num"]=props.num;
-      props.socket.emit("edit message",temp);
+      let temp = message;
+      temp["num"] = props.num;
+      props.socket.emit("edit message", temp);
       toast({
         title: "Message updated!",
         status: "success",
