@@ -24,7 +24,8 @@ export default function ProfileView({ username, gmail }) {
           cursor={"pointer"}
           onClick={onOpen}
           src={
-            "https://lh3.googleusercontent.com/a/AEdFTp7kiDrC2tOsV1S8_g-WJXQlmhRAFFZCYskUxGsYFA=s96-c"
+            `https://avatars.dicebear.com/api/bottts/${username}.svg`
+            // "https://lh3.googleusercontent.com/a/AEdFTp7kiDrC2tOsV1S8_g-WJXQlmhRAFFZCYskUxGsYFA=s96-c"
           }
         />
       </Tooltip>
