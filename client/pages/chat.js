@@ -45,6 +45,7 @@ function Chat() {
     NOTIFYDELETEDCHAT,
     ADDUSERMESSAGE,
     EDITMESSAGE,
+    ADDFRIEND,
     DELETEMESSAGE,
   } = bindActionCreators(actionCreators, dispatch);
 
@@ -167,6 +168,13 @@ function Chat() {
       SETCHAT("", -1);
     });
 
+    socket.on("added chat", (addedChat) => {
+      console.log("message from server");
+      console.log(addedChat);
+      ADDFRIEND(addedChat);
+      SETCHAT("", -1);
+    });
+
     socket.on("update deleted", (deletedMessage) => {
       if (
         !selectedChatCompare ||
@@ -285,7 +293,7 @@ function Chat() {
             flex="1"
           >
             <Flex direction="column" p={4}>
-              <SlideDrawer />
+              <SlideDrawer socket={socket} />
             </Flex>
             <Flex flexDir={"column"} flexGrow="1" gap="2px">
               {friendData.map((v, i) => {

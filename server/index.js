@@ -69,10 +69,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("delete chat", (deleteChatData) => {
-    // socket.emit("deleted chat", deleteChatData);
-    console.log(deleteChatData.friend);
     socket.in(deleteChatData.friend).emit("deleted chat", deleteChatData);
-    socket.in(deleteChatData.chatId).emit("deleted chat", deleteChatData);
+  });
+
+  socket.on("add chat", (addChatData) => {
+    console.log(addChatData);
+    socket.in(addChatData.passId).emit("added chat", addChatData);
   });
 
   socket.on("edit message", (editedMessage) => {

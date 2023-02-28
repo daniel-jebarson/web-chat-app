@@ -22,7 +22,7 @@ import UserCard from "../helpers/UserCard";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-function SideDrawer() {
+function SideDrawer(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
@@ -138,6 +138,7 @@ function SideDrawer() {
                     <Box key={i}>
                       {" "}
                       <UserCard
+                        socket={props.socket}
                         data={v}
                         gmail={v.gmail}
                         username={v.username}

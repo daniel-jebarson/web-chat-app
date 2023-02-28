@@ -4,10 +4,18 @@ import { Container, Avatar, Flex, Text, useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../../hooks";
 import Axios from "axios";
-function UserCard({ gmail, username, data: user_Data }) {
+function UserCard({ gmail, username, data: user_Data, socket }) {
   const toast = useToast();
   const dispatch = useDispatch();
   const { ADDFRIEND } = bindActionCreators(actionCreators, dispatch);
+
+  const getFriendId = async (data, user) => {
+    for (let i = 0; i < data.users.length; i++) {
+      if (data.users[i]["_id"] !== user._id) return data.users[i]["_id"];
+    }
+    return "";
+  };
+
   const addFriend = async () => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
     try {
@@ -21,7 +29,22 @@ function UserCard({ gmail, username, data: user_Data }) {
         { userId: user_Data._id },
         config
       );
-      // console.log(data);
+      async function sleep(milliseconds) {
+        return await new Promise((resolve) =>
+          setTimeout(resolve, milliseconds)
+        );
+      }
+      let friendId = await getFriendId(data, user);
+      let tempData = {
+        id: user["_id"],
+        chatId: data["_id"],
+        gmail: user["gmail"],
+        username: user["username"],
+        image: user["image"],
+        passId: friendId,
+      };
+      socket.emit("add chat", tempData);
+
       toast({
         title: "User added!",
         description: `Created chat for ${username}`,
@@ -30,6 +53,7 @@ function UserCard({ gmail, username, data: user_Data }) {
         isClosable: true,
         position: "bottom",
       });
+      await sleep(3000);
       ADDFRIEND(user_Data);
       window.location.href = "/chat";
     } catch (err) {
@@ -43,7 +67,6 @@ function UserCard({ gmail, username, data: user_Data }) {
       });
       console.log(err);
     }
-    // console.log(data);
   };
   return (
     <Container
