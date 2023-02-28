@@ -64,7 +64,6 @@ function SideDrawer() {
         config
       );
 
-     
       setResult(
         data.filter(
           (d) => !friendsData.map((k) => k.username).includes(d.username)
@@ -117,13 +116,12 @@ function SideDrawer() {
               flexDirection={"row"}
               pb={2}
               zIndex={"1"}
-              width={"95%"}
+              // width={"95%"}
             >
               <Input
                 placeholder="Search by name or email"
                 ref={ref}
-                w={"74%"}
-                width={"xs"}
+                w={"75%"}
                 defaultValue={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
