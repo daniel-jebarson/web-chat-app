@@ -69,6 +69,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("delete chat", (deleteChatData) => {
+    // socket.emit("deleted chat", deleteChatData);
+    console.log(deleteChatData.friend);
+    socket.in(deleteChatData.friend).emit("deleted chat", deleteChatData);
     socket.in(deleteChatData.chatId).emit("deleted chat", deleteChatData);
   });
 

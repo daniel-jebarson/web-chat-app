@@ -55,7 +55,7 @@ function Chat() {
   const messageData = useSelector((state) => state.messages);
 
   const [socketConnected, setSocketConnected] = useState(false);
-
+  const [currFriend, setCurrFriend] = useState("");
   const fetchMessages = async (username = chatData.name, id = chatData.id) => {
     if (chatData.id == -1) return;
     try {
@@ -73,6 +73,7 @@ function Chat() {
       console.log(data);
       ADDUSERMESSAGE(id, data);
       SETCHAT(username, id);
+      setCurrFriend(getFriendId(id));
       socket.emit("join chat", id);
     } catch (err) {
       console.log(err);
@@ -85,6 +86,17 @@ function Chat() {
         position: "bottom",
       });
     }
+  };
+
+  const getFriendId = (id) => {
+    console.log("came");
+    if (id == -1) return "";
+    else {
+      for (let i = 0; i < friendData.length; i++) {
+        if (friendData[i]["chatId"] === id) return friendData[i]["id"];
+      }
+    }
+    return "";
   };
 
   const fetchChatList = async (d) => {
@@ -156,7 +168,6 @@ function Chat() {
     });
 
     socket.on("update deleted", (deletedMessage) => {
-      // console.log("message came");
       if (
         !selectedChatCompare ||
         selectedChatCompare.id !== deletedMessage.chat._id
@@ -172,7 +183,6 @@ function Chat() {
     });
 
     socket.on("update edited", (editedMessage) => {
-      // console.log("message came");
       if (
         !selectedChatCompare ||
         selectedChatCompare.id !== editedMessage.chat._id
@@ -188,7 +198,6 @@ function Chat() {
     });
 
     socket.on("message received", (newMessageReceived) => {
-      // console.log("message came");
       if (
         !selectedChatCompare ||
         selectedChatCompare.id !== newMessageReceived.chat._id
@@ -317,7 +326,12 @@ function Chat() {
           <OverlayChat />
         ) : (
           <Box>
-            <Navbar socket={socket} name={chatData.name} id={chatData.id} />
+            <Navbar
+              socket={socket}
+              name={chatData.name}
+              friend={currFriend}
+              id={chatData.id}
+            />
             <Box
               bgColor={"#23272A"}
               overflowY="scroll"
