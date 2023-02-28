@@ -42,6 +42,7 @@ function Chat() {
     SETCHAT,
     SETUSER,
     SETFRIENDS,
+    NOTIFYDELETEDCHAT,
     ADDUSERMESSAGE,
     EDITMESSAGE,
     DELETEMESSAGE,
@@ -149,6 +150,11 @@ function Chat() {
   }
 
   useEffect(() => {
+    socket.on("deleted chat", (deletedChat) => {
+      NOTIFYDELETEDCHAT(deletedChat.chatId);
+      SETCHAT("", -1);
+    });
+
     socket.on("update deleted", (deletedMessage) => {
       // console.log("message came");
       if (
@@ -311,7 +317,7 @@ function Chat() {
           <OverlayChat />
         ) : (
           <Box>
-            <Navbar name={chatData.name} id={chatData.id} />
+            <Navbar socket={socket} name={chatData.name} id={chatData.id} />
             <Box
               bgColor={"#23272A"}
               overflowY="scroll"

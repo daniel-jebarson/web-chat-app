@@ -45,12 +45,16 @@ function Navbar(props) {
         },
         data: { chatId: props.id },
       };
+      props.socket.emit("delete chat", {
+        chatId: props.id,
+      });
       const { data } = await Axios.delete(
         `http://localhost:5000/chat`,
 
         config
       );
-
+      console.log(data);
+      // console.log("data", data);
       toast({
         title: "Chat deleted successfully!",
         description: `Removed chat of ${props.name}`,

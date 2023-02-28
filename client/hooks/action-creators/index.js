@@ -1,4 +1,9 @@
-import { addFriend, removeFriend,setFriends } from "../actions/friend";
+import {
+  addFriend,
+  removeFriend,
+  setFriends,
+  notifyDeletedChat,
+} from "../actions/friend";
 import { setChat } from "../actions/chat";
 import { setUser } from "../actions/user";
 import {
@@ -7,7 +12,6 @@ import {
   EDIT_MESSAGE,
   ADD_USER_MESSAGE,
   REMOVE_USER_MESSAGE,
-
 } from "../actions/message";
 export const ADDFRIEND = (friend) => {
   return (dispatch) => {
@@ -18,6 +22,12 @@ export const ADDFRIEND = (friend) => {
 export const REMOVEFRIEND = (friend) => {
   return (dispatch) => {
     dispatch(removeFriend(friend));
+  };
+};
+
+export const NOTIFYDELETEDCHAT = (chatId) => {
+  return (dispatch) => {
+    dispatch(notifyDeletedChat(chatId));
   };
 };
 
@@ -39,9 +49,9 @@ export const EDITMESSAGE = (message, chatId, index) => {
   };
 };
 
-export const SETCHAT = (username,id) => {
+export const SETCHAT = (username, id) => {
   return (dispatch) => {
-    dispatch(setChat(username,id));
+    dispatch(setChat(username, id));
   };
 };
 
@@ -63,8 +73,8 @@ export const SETUSER = (userinfo) => {
   };
 };
 
-export const SETFRIENDS=(data,username)=>{
-  return(dispatch)=>{
-    dispatch(setFriends(data,username))
-  }
-}
+export const SETFRIENDS = (data, username) => {
+  return (dispatch) => {
+    dispatch(setFriends(data, username));
+  };
+};
