@@ -69,6 +69,42 @@ export default function StatisticsView() {
       },
     ],
   };
+
+  const output = {
+    total: {
+      words: 4,
+      edited: 2,
+      deleted: 2,
+      tot_Char: 13,
+      longest: 5,
+      long_message: "hello",
+      unique: 4,
+      messages: 4,
+      average: 4,
+    },
+    Dani: {
+      words: 2,
+      edited: 1,
+      deleted: 0,
+      tot_Char: 7,
+      longest: 5,
+      long_message: "hello",
+      unique: 2,
+      messages: 2,
+      average: 4,
+    },
+    sample1: {
+      words: 2,
+      edited: 1,
+      deleted: 2,
+      tot_Char: 6,
+      longest: 3,
+      long_message: "hoi",
+      unique: 2,
+      messages: 2,
+      average: 3,
+    },
+  };
   return (
     <>
       <Tooltip placement="right-end" hasArrow label="Profile View">

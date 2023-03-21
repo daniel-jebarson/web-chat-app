@@ -53,7 +53,7 @@ function UserCard({ gmail, username, data: user_Data, socket }) {
         isClosable: true,
         position: "bottom",
       });
-      await sleep(3000);
+      await sleep(500);
       ADDFRIEND(user_Data);
       window.location.href = "/chat";
     } catch (err) {
