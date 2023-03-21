@@ -1997,6 +1997,11 @@ undefsafe@^2.0.5:
   resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-2.0.5.tgz#38733b9327bdcd226db889fb723a6efd162e6e2c"
   integrity sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==
 
+unique-words@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/unique-words/-/unique-words-2.0.1.tgz#238bdaef09595b626e61dbf3db7cbb6290e6c654"
+  integrity sha512-5nB/5lAAfGlqJRVGfxJ8G9sa/Xs4lvosqQPENQUwM7wvGkEy0pV88H0VZ3+XvY2mBpwhzQd1U9NSEIx0vTwA7w==
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
