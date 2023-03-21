@@ -4,6 +4,7 @@ const {
   getChatAccess,
   getPrivateChats,
   deleteChat,
+  getChatStats,
 } = require("../controllers/chat");
 
 const router = express.Router();
@@ -12,6 +13,8 @@ router
   .post(authorizer, getChatAccess)
   .get(authorizer, getPrivateChats)
   .delete(authorizer, deleteChat);
+
+router.route("/getStats").post(authorizer, getChatStats);
 // router.route("/group").post(authorizer, createGroupChat);
 // router.route("/rename").put(authorizer, renameGroup);
 // router.route("/groupremove").put(authorizer, removeFromGroup);
