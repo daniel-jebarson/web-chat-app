@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators } from "../../hooks";
 import { Search2Icon, AtSignIcon } from "@chakra-ui/icons";
 import { MdPersonRemoveAlt1 } from "react-icons/md";
+import { ImStatsDots } from "react-icons/im";
 import {
   Flex,
   IconButton,
@@ -35,6 +36,37 @@ function Navbar(props) {
     actionCreators,
     dispatch
   );
+
+  const getStatsData = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      // console.log(props);
+      const config = {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await Axios.post(
+        `http://localhost:5000/chat/getStats`,
+        {
+          id: props.id,
+        },
+        config
+      );
+      console.log(data);
+    } catch (err) {
+      toast({
+        title: "Error occured!",
+        description: `Failed to get stats for chat ${props.name}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      console.log(err);
+    }
+  };
+
   const removeFriend = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -71,7 +103,7 @@ function Navbar(props) {
       SETCHAT("", -1);
       console.log(props.name + props.id + " removed success");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast({
         title: "Error occured!",
         description: `Failed to delete chat of ${props.name}`,
@@ -103,24 +135,14 @@ function Navbar(props) {
       >
         {props.name}
       </Text>
-      <Container color="white">
-        <InputGroup>
-          <Input
-            type="text"
-            placeholder="Search Here"
-            bgColor={"#222428"}
-            color="white"
-          />
-          <InputRightElement>
-            <IconButton
-              size="md"
-              colorScheme="blackAlpha"
-              aria-label="Get request"
-              icon={<Search2Icon />}
-            />
-          </InputRightElement>
-        </InputGroup>
-      </Container>
+      <Container color={"white"} />
+      <IconButton
+        variant={"link"}
+        color="white"
+        size={"md"}
+        onClick={getStatsData}
+        icon={<ImStatsDots />}
+      />
       <IconButton
         variant="link"
         color={"white"}
