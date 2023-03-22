@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   useDisclosure,
   Modal,
@@ -12,178 +12,149 @@ import {
   Avatar,
   Container,
   Text,
+  IconButton,
   Flex,
   Tooltip,
+  TableContainer,
+  Table,
+  TableCaption,
+  Thead,
+  Tr,
+  Td,
+  Tbody,
+  keyframes,
+  useToast,
 } from "@chakra-ui/react";
-export default function StatisticsView() {
+import Axios from "axios";
+import { ImStatsDots } from "react-icons/im";
+export default function StatisticsView({ chatId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const data = {
-    "63da050e2b9bdcf8fd819ddc": [
-      {
-        _id: "63da05382b9bdcf8fd819dfb",
-        content: "hi",
-        sender: {
-          _id: "63d912b4f8bc673d6c98f7d2",
-          username: "Dani",
-          image:
-            "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
-        },
-        chat: {
-          _id: "63da050e2b9bdcf8fd819ddc",
-          chatName: "sender",
-          isGroupChat: false,
-          users: ["63da04fb2b9bdcf8fd819dd4", "63d912b4f8bc673d6c98f7d2"],
-          createdAt: "2023-02-01T06:22:06.095Z",
-          updatedAt: "2023-02-01T06:22:57.411Z",
-          __v: 0,
-          latestMessage: "63da05412b9bdcf8fd819e1b",
-        },
-        isDeleted: false,
-        createdAt: "2023-02-01T06:22:48.929Z",
-        updatedAt: "2023-02-01T06:23:05.100Z",
-        __v: 0,
-      },
-      {
-        _id: "63da05412b9bdcf8fd819e1b",
-        content: "hello",
-        sender: {
-          _id: "63da04fb2b9bdcf8fd819dd4",
-          username: "sample1",
-          image:
-            "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
-        },
-        chat: {
-          _id: "63da050e2b9bdcf8fd819ddc",
-          chatName: "sender",
-          isGroupChat: false,
-          users: ["63da04fb2b9bdcf8fd819dd4", "63d912b4f8bc673d6c98f7d2"],
-          createdAt: "2023-02-01T06:22:06.095Z",
-          updatedAt: "2023-02-01T06:22:57.411Z",
-          __v: 0,
-          latestMessage: "63da05412b9bdcf8fd819e1b",
-        },
-        isDeleted: true,
-        createdAt: "2023-02-01T06:22:57.393Z",
-        updatedAt: "2023-02-01T06:23:11.751Z",
-        __v: 0,
-      },
-    ],
+  const [output, setOutput] = useState("");
+  const toast = useToast();
+  const getStatistics = async (id) => {
+    await getStatsData(id);
   };
 
-  const output = {
-    total: {
-      words: 4,
-      edited: 2,
-      deleted: 2,
-      tot_Char: 13,
-      longest: 5,
-      long_message: "hello",
-      unique: 4,
-      messages: 4,
-      average: 4,
-    },
-    Dani: {
-      words: 2,
-      edited: 1,
-      deleted: 0,
-      tot_Char: 7,
-      longest: 5,
-      long_message: "hello",
-      unique: 2,
-      messages: 2,
-      average: 4,
-    },
-    sample1: {
-      words: 2,
-      edited: 1,
-      deleted: 2,
-      tot_Char: 6,
-      longest: 3,
-      long_message: "hoi",
-      unique: 2,
-      messages: 2,
-      average: 3,
-    },
+  const getStatsData = async (id) => {
+    try {
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      // console.log(props);
+      const config = {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await Axios.post(
+        `http://localhost:5000/chat/getStats`,
+        {
+          id: chatId,
+        },
+        config
+      );
+      setOutput(data);
+      onOpen();
+      console.log(data);
+    } catch (err) {
+      toast({
+        title: "Error occured!",
+        description: `Failed to get stats for chat ${chatId}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      console.log(err);
+    }
   };
+
   return (
     <>
-      <Tooltip placement="right-end" hasArrow label="Profile View">
-        <Avatar
-          cursor={"pointer"}
-          onClick={onOpen}
-          src={
-            `https://avatars.dicebear.com/api/bottts/dani.svg`
-            // "https://lh3.googleusercontent.com/a/AEdFTp7kiDrC2tOsV1S8_g-WJXQlmhRAFFZCYskUxGsYFA=s96-c"
-          }
+      <Tooltip placement="right-end" hasArrow label="Statistics View">
+        <IconButton
+          variant={"link"}
+          color="white"
+          size={"md"}
+          onClick={() => getStatistics(chatId)}
+          icon={<ImStatsDots />}
         />
       </Tooltip>
-      <Modal size={"xl"} onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal
+        scrollBehavior="inside"
+        size={"xl"}
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+      >
         <ModalOverlay />
         <ModalContent
         // bgColor={"#1b1e20"}
         >
           <ModalHeader
             // color={"whiteAlpha.300"}
-            fontSize={"3xl"}
+            fontSize={"4xl"}
             textTransform={"uppercase"}
             fontWeight={"extrabold"}
+            textAlign={"center"}
           >
-            Statistics
+            Statistics Data
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Container
               display={"flex"}
+              pt={"7"}
               alignItems={"center"}
               textAlign={"center"}
-              gap={"5"}
-              w={"100%"}
-              flexDirection="row"
+              justifyContent={"center"}
+              gap={"20"}
+              w={"200"}
+              flexDirection="col"
+              flexWrap={"wrap"}
             >
-              {/* <Avatar
-                size="xl"
-                name={"dani"}
-                src={`https://avatars.dicebear.com/api/bottts/dani.svg`}
-              /> */}
-
-              <Flex flexDirection={"column"} w={"50%"} bgColor={"red"}>
-                <Text
-                  fontSize={"3xl"}
-                  fontStyle={"oblique"}
-                  fontWeight={"bold"}
-                >
-                  Dani
-                </Text>
-              </Flex>
-              <Flex flexDirection={"column"} w={"50%"} bgColor={"blue"}>
-                <Text
-                  fontSize={"3xl"}
-                  fontStyle={"oblique"}
-                  fontWeight={"bold"}
-                >
-                  Dani
-                </Text>
-              </Flex>
-              {/* <Text
-                  fontSize={"3xl"}
-                  fontStyle={"oblique"}
-                  fontWeight={"bold"}
-                >
-                  {username}
-                </Text>
-                <Text
-                  fontSize={"16"}
-                  fontWeight={"semibold"}
-                  fontStyle={"italic"}
-                >
-                  {gmail}
-                </Text> */}
+              {output == "" || output == null
+                ? ""
+                : Object.keys(output).map((v) => {
+                    return (
+                      <TableContainer
+                        w={"80%"}
+                        boxShadow="dark-lg"
+                        cursor={"pointer"}
+                        _hover={{
+                          transform: "translateY(-7px) scale(1.035)",
+                          transitionDuration: "300ms",
+                        }}
+                      >
+                        <Text
+                          textTransform={"uppercase"}
+                          width={"100%"}
+                          fontSize={"3xl"}
+                          fontStyle={"italic"}
+                          fontFamily={"fantasy"}
+                        >
+                          {v}
+                        </Text>
+                        <Table variant={"striped"} colorScheme={"messenger"}>
+                          <Thead>
+                            <Tr>
+                              <Td>Name</Td>
+                              <Td>Value</Td>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {Object.keys(output[v]).map((val) => {
+                              return (
+                                <Tr>
+                                  <Td>{val}</Td>
+                                  <Td>{output[v][val]}</Td>
+                                </Tr>
+                              );
+                            })}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
+                    );
+                  })}
             </Container>
-
-            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea odit
-            excepturi at eveniet libero molestias, laudantium necessitatibus
-            quasi sed vitae cumque unde aliquam sint quaerat, officia sunt rerum
-            quis eum. */}
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>

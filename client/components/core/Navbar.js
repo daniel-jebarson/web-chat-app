@@ -18,13 +18,18 @@ import {
   keyframes,
   Box,
   useToast,
+  useDisclosure,
+  Tooltip,
 } from "@chakra-ui/react";
 import Axios from "axios";
+import StatisticsView from "../views/StatisticsView";
+import { useState } from "react";
 
 function Navbar(props) {
   const spin = keyframes`
   from { transform: rotate(0deg); }
   to { transform: rotate(5400deg); }`;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const prefersReducedMotion = usePrefersReducedMotion();
   const toast = useToast();
   const animation = prefersReducedMotion
@@ -36,36 +41,6 @@ function Navbar(props) {
     actionCreators,
     dispatch
   );
-
-  const getStatsData = async () => {
-    try {
-      const user = JSON.parse(localStorage.getItem("userInfo"));
-      // console.log(props);
-      const config = {
-        headers: {
-          authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await Axios.post(
-        `http://localhost:5000/chat/getStats`,
-        {
-          id: props.id,
-        },
-        config
-      );
-      console.log(data);
-    } catch (err) {
-      toast({
-        title: "Error occured!",
-        description: `Failed to get stats for chat ${props.name}`,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      console.log(err);
-    }
-  };
 
   const removeFriend = async () => {
     try {
@@ -136,13 +111,8 @@ function Navbar(props) {
         {props.name}
       </Text>
       <Container color={"white"} />
-      <IconButton
-        variant={"link"}
-        color="white"
-        size={"md"}
-        onClick={getStatsData}
-        icon={<ImStatsDots />}
-      />
+
+      <StatisticsView chatId={props.id} />
       <IconButton
         variant="link"
         color={"white"}
