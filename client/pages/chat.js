@@ -136,6 +136,20 @@ function Chat() {
       });
       sleep(2000);
       window.location.href = "./";
+      return;
+    } else if (!data.verified) {
+      toast({
+        title: "Verify email",
+        description: "Verify the email with otp!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      sleep(3000);
+      localStorage.clear();
+      window.location.href = "./";
+      return;
     } else {
       SETUSER(data);
     }

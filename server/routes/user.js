@@ -10,5 +10,6 @@ const router = express.Router();
 
 router.route("/").post(registerUser).get(authorizer, getAllUsers);
 router.route("/login").post(loginUser);
+router.route("/:id/verify/:token");
 
 module.exports = router;

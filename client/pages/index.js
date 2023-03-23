@@ -57,6 +57,11 @@ const Home = () => {
         },
         config
       );
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      if (!data.verified) {
+        window.location.href = "./otp";
+        return;
+      }
       toast({
         title: "Logged in Successfully!",
         status: "success",
@@ -65,7 +70,7 @@ const Home = () => {
         position: "bottom",
       });
       // console.log(data);
-      localStorage.setItem("userInfo", JSON.stringify(data));
+
       await sleep(3000);
       setLoading(false);
       window.location.href = "./chat";
