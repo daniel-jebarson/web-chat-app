@@ -32,7 +32,7 @@ const Home = () => {
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("userInfo"));
-    if (data) {
+    if (data && data.verified) {
       window.location.href = "./chat";
     }
   }, []);

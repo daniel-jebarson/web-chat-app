@@ -9,6 +9,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const sample = require("./routes/sample");
 const userRoutes = require("./routes/user");
+const OTPRoutes = require("./routes/otp");
 const chatRoutes = require("./routes/chat");
 const messageRoutes = require("./routes/message");
 const colors = require("colors");
@@ -18,11 +19,13 @@ const colors = require("colors");
 app.use(cors());
 app.use(express.json());
 app.use(logHandler);
+
 // routes
 app.use("/sample", sample);
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
+app.use("/otp", OTPRoutes);
 
 app.use(errorHandler);
 app.use(NotFound);

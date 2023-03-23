@@ -12,7 +12,7 @@ const tokenSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    expireAfterSeconds: 3600,
+    expireAfterSeconds: 600,
   }
 );
 

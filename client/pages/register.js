@@ -59,7 +59,6 @@ const Register = () => {
             "Content-type": "application/json",
           },
         };
-        console.log(user, email, pass);
         const { data } = await Axios.post(
           "http://localhost:5000/user",
           {
@@ -71,7 +70,8 @@ const Register = () => {
         );
         console.log(data);
         toast({
-          title: "Registered Successfully",
+          title: "Account created successfully",
+          description: "Please verify your account to login",
           status: "success",
           duration: 4000,
           isClosable: true,
@@ -79,7 +79,7 @@ const Register = () => {
         });
         localStorage.setItem("userInfo", JSON.stringify(data));
         setLoading(false);
-        window.location.href = "./chat";
+        window.location.href = "./otp";
       } catch (err) {
         console.log(err);
         setLoading(false);

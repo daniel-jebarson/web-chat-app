@@ -3,7 +3,6 @@ const nodemailer = require("nodemailer");
 module.exports = async (email, subject, text) => {
   const { HOST, SERVICE, EMAIL_PORT, SECURE, USER, PASS } = process.env;
   try {
-    console.log(HOST);
     const transporter = nodemailer.createTransport({
       host: HOST,
       service: SERVICE,

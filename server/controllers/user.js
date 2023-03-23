@@ -1,9 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { CustomError } = require("../error/custom");
 const UserModel = require("../models/User");
-const TokenModel = require("../models/Token");
 const generateJWToken = require("../config/webtoken");
-const sendEmail = require("../utils/sendEmail");
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
@@ -22,28 +20,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.send(AllUsers);
 });
 
-const verifyUser = asyncHandler(async (req, res) => {
-  try {
-    const user = await UserModel.findOne({ _id: req.params.id });
-    if (!user) throw new CustomError("Invalid link!", 400);
-
-    const token = await TokenModel.findOne({
-      userId: user._id,
-      token: req.params.token,
-    });
-    if (!token) throw new CustomError("Invalid link!", 400);
-
-    await UserModel.updateOne({ _id: user._id, verified: true });
-    await token.remove();
-
-    res.status(200).send({ message: "Email verified successfully" });
-  } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
-  }
-});
-
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, gmail, password, image, friends } = req.body;
+  const { username, gmail, password } = req.body;
   if (!username || !gmail || !password) {
     throw new CustomError("Specify the required fields!", 400);
   }
@@ -58,19 +36,8 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     gmail,
     password,
-    image,
-    friends,
   });
   const token = generateJWToken(newUser._id);
-  const Token = await TokenModel.create({
-    userId: newUser._id,
-    token: token,
-  });
-  await sendEmail(
-    gmail,
-    "Verify the otp for email app",
-    `${process.env.BASE_URL}/user/${newUser._id}/verify/${Token.token}`
-  );
   if (newUser) {
     res.status(200).json({
       _id: newUser._id,
@@ -79,6 +46,7 @@ const registerUser = asyncHandler(async (req, res) => {
       image: newUser.image,
       friends: newUser.friends,
       token: token,
+      verified: newUser.verified,
     });
   } else {
     throw new CustomError("Failed to create user!", 400);
