@@ -18,6 +18,7 @@ import {
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 import Axios from "axios";
+import HeaderMeta from "../components/meta/HeaderMeta";
 // import otpGenerator from "otp-generator";
 import React, { useState, useEffect } from "react";
 const OTP = () => {
@@ -91,6 +92,10 @@ const OTP = () => {
       justifyContent="center"
       alignItems="center"
     >
+      <HeaderMeta
+        content={"OTP to activate the account in Web Chat App"}
+        title={"OTP for the Web Chat App"}
+      />
       <Stack
         flexDir="column"
         mb="2"

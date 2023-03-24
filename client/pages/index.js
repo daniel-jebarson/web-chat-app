@@ -16,9 +16,8 @@ import {
   InputRightElement,
   useToast,
 } from "@chakra-ui/react";
-
+import HeaderMeta from "../components/meta/HeaderMeta";
 import { useEffect } from "react";
-
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 import Axios from "axios";
 
@@ -96,6 +95,10 @@ const Home = () => {
       justifyContent="center"
       alignItems="center"
     >
+      <HeaderMeta
+        content={"Login in to the web chat app to start messaging to others"}
+        title={"Login for the Web Chat App"}
+      />
       <Stack
         flexDir="column"
         mb="2"

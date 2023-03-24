@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
+import HeaderMeta from "../components/meta/HeaderMeta";
 import Axios from "axios";
 import { useEffect } from "react";
 const Register = () => {
@@ -104,6 +105,10 @@ const Register = () => {
       justifyContent="center"
       alignItems="center"
     >
+      <HeaderMeta
+        content={"Register to create the account in Web Chat App"}
+        title={"Register to Web Chat App"}
+      />
       <Stack
         flexDir="column"
         mb="2"

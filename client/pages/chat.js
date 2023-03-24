@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OverlayChat from "../components/misc/OverlayChat";
 import PorfileView from "../components/views/ProfileView";
 import Axios from "axios";
+import HeaderMeta from "../components/meta/HeaderMeta";
 import { io } from "socket.io-client";
 import ScrollableFeed from "react-scrollable-feed";
 import ChatLoader from "../components/animation/ChatLoader";
@@ -262,6 +263,10 @@ function Chat() {
 
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
+      <HeaderMeta
+        content={"You can chat here with your friends and create friends"}
+        title={"Chat for Web Chat App"}
+      />
       <Box maxW="fit-content" p="0" m="0">
         <Flex
           direction="column"
