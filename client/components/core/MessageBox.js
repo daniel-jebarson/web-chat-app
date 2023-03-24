@@ -88,13 +88,11 @@ function MessageBox({ socket }) {
           border={"none"}
           boxShadow="dark-lg"
           rounded="md"
-          height={"6vh"}
+          maxHeight={"7vh"}
         />
         <InputRightElement>
           <IconButton
-            ml={"1.5"}
-            mb="1"
-            size="sm"
+            flexGrow={1}
             colorScheme="green"
             aria-label="Get request"
             onClick={handleMessage}
