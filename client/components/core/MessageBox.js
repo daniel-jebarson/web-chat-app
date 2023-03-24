@@ -39,6 +39,7 @@ function MessageBox({ socket }) {
     };
     try {
       const { name, id } = chatData;
+      setSearch("");
       const { data } = await Axios.post(
         `${process.env.NEXT_PUBLIC_BACKENDURL}/message`,
         {
@@ -57,7 +58,6 @@ function MessageBox({ socket }) {
       // console.log(data);
       SETCHAT(name, id);
       // console.log(data);
-      setSearch("");
     } catch (err) {
       console.log(err);
       toast({
