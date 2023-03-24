@@ -1,19 +1,34 @@
-# web-chat-app
+# <h1 align="center">Web Chat App</h1>
 
-## Login Page:
-![image](https://user-images.githubusercontent.com/88134306/216805985-ba013905-1b0a-412c-85f7-c50b308af7cb.png)
+## Login Page
+![image](https://user-images.githubusercontent.com/88134306/227575211-22ae017e-d0c8-421f-9440-d326233a3d75.png)
 
-## Register page:
+## Register Page
 ![image](https://user-images.githubusercontent.com/88134306/216806064-6ad51c10-355c-4b7d-9753-eddbea10a3e7.png)
 
-## Profile:
+## OTP Page
+![image](https://user-images.githubusercontent.com/88134306/227575608-99bd80db-b5d4-4e6d-bae5-2e8b09729643.png)
+
+## OTP Email
+![image](https://user-images.githubusercontent.com/88134306/227575982-b580f1f8-0b17-47ea-85ef-5c21112eaf5b.png)
+
+## Profile
 ![image](https://user-images.githubusercontent.com/88134306/216806091-dd33ecbe-7fb3-431d-8444-3a4dc7d5fd3e.png)
 
-## Chat Page:
+## Chat Page
 ![image](https://user-images.githubusercontent.com/88134306/216806005-90dd588a-b771-4f92-b8e7-1e857f7567a0.png)
 
-## New Chat:
+## New Chat
 ![image](https://user-images.githubusercontent.com/88134306/216806020-a90a267c-3957-4be8-9e1f-c3a1a4d19a93.png)
+
+## Dark Mode
+![image](https://user-images.githubusercontent.com/88134306/227576773-06c3a1d2-0a1a-4ab2-8d1f-e06d71408410.png)
+
+## Light Mode
+![image](https://user-images.githubusercontent.com/88134306/227576849-78bd8cd5-f148-4633-9543-bc72feea7126.png)
+
+## Message Statistics
+![image](https://user-images.githubusercontent.com/88134306/227576979-408f0bfb-9980-49ba-9228-c54d70b566b1.png)
 
 
 ## Deployment
@@ -54,14 +69,14 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Support 
 
-If you think that this app helped you please give your support by giving star to the repo in github 😋
+If you think that this app helped you in studies or gave new ideas please give your support by giving star to the repo in github 😋
 
 ## Installing Guide
 
 First, clone the repo 
 
 ```bash
-npm install concurrently
+yarn global add concurrently
 
 cd client
 yarn 
