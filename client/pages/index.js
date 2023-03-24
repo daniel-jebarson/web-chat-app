@@ -50,7 +50,7 @@ const Home = () => {
     };
     try {
       const { data } = await Axios.post(
-        "http://localhost:5000/user/login",
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/user/login`,
         {
           gmail: email,
           password: pass,

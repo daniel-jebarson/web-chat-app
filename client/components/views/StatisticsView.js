@@ -48,7 +48,7 @@ export default function StatisticsView({ chatId }) {
         },
       };
       const { data } = await Axios.post(
-        `http://localhost:5000/chat/getStats`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/chat/getStats`,
         {
           id: chatId,
         },

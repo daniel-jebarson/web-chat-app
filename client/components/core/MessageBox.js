@@ -40,7 +40,7 @@ function MessageBox({ socket }) {
     try {
       const { name, id } = chatData;
       const { data } = await Axios.post(
-        `http://localhost:5000/message`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/message`,
         {
           content: search,
           chatId: chatData.id,

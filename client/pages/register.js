@@ -60,7 +60,7 @@ const Register = () => {
           },
         };
         const { data } = await Axios.post(
-          "http://localhost:5000/user",
+          `${process.env.NEXT_PUBLIC_BACKENDURL}/user`,
           {
             username: user,
             gmail: email,

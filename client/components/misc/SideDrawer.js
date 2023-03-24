@@ -64,7 +64,7 @@ function SideDrawer(props) {
         },
       };
       const { data } = await Axios.get(
-        `http://localhost:5000/user?search=${search}`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/user?search=${search}`,
         config
       );
 

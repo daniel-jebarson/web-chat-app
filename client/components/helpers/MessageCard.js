@@ -50,7 +50,7 @@ export default function (props) {
         },
       };
       const { data } = await Axios.delete(
-        `http://localhost:5000/message/${props.id}`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/message/${props.id}`,
 
         config
       );
@@ -102,7 +102,7 @@ export default function (props) {
         },
       };
       const { data: message } = await Axios.put(
-        `http://localhost:5000/message/${props.id}`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/message/${props.id}`,
         {
           content: text,
         },

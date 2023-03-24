@@ -59,7 +59,7 @@ function Navbar(props) {
         friend: props.friend,
       });
       const { data } = await Axios.delete(
-        `http://localhost:5000/chat`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/chat`,
 
         config
       );

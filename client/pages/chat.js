@@ -29,7 +29,7 @@ import { io } from "socket.io-client";
 import ScrollableFeed from "react-scrollable-feed";
 import ChatLoader from "../components/animation/ChatLoader";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = `${process.env.NEXT_PUBLIC_BACKENDURL}`;
 var socket, selectedChatCompare;
 var selectedChat = {
   name: "",
@@ -70,7 +70,7 @@ function Chat() {
       };
 
       let { data } = await Axios.post(
-        `http://localhost:5000/message/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/message/${id}`,
         {},
         config
       );
@@ -110,7 +110,10 @@ function Chat() {
           authorization: `Bearer ${d.token}`,
         },
       };
-      let { data } = await Axios.get(`http://localhost:5000/chat`, config);
+      let { data } = await Axios.get(
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/chat`,
+        config
+      );
       SETFRIENDS(data, d.username);
       // console.log(data);
     } catch (err) {

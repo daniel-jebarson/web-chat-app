@@ -57,7 +57,7 @@ const OTP = () => {
       };
 
       let { data } = await Axios.post(
-        `http://localhost:5000/otp/send/${userData._id}`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/otp/send/${userData._id}`,
         { gmail: userData.gmail },
         config
       );

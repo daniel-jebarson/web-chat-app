@@ -33,7 +33,7 @@ function UserCard({ gmail, username, data: user_Data, socket }) {
         },
       };
       const { data } = await Axios.post(
-        `http://localhost:5000/chat`,
+        `${process.env.NEXT_PUBLIC_BACKENDURL}/chat`,
         { userId: user_Data._id },
         config
       );
