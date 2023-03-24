@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 import Axios from "axios";
 import StatisticsView from "../views/StatisticsView";
+import { AiFillGithub } from "react-icons/ai";
 import { useState } from "react";
 
 function Navbar(props) {
@@ -125,10 +126,10 @@ function Navbar(props) {
         variant="link"
         color={color}
         size={"lg"}
-        icon={<FiHelpCircle />}
+        icon={<AiFillGithub />}
         onClick={() => {
           window.location.href =
-            "https://github.com/daniel-jebarson/web-chat-app/blob/main/README.md";
+            "https://github.com/daniel-jebarson/web-chat-app";
         }}
       />
       <IconButton
