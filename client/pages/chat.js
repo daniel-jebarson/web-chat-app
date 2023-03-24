@@ -17,7 +17,7 @@ import FriendCard from "../components/helpers/FriendCard";
 import { bindActionCreators } from "redux";
 import SlideDrawer from "../components/misc/SideDrawer";
 import { actionCreators } from "../hooks";
-import { SunIcon } from "@chakra-ui/icons";
+import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { FiLogOut } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import MessageCard from "../components/helpers/MessageCard";
@@ -39,6 +39,7 @@ var selectedChat = {
 function Chat() {
   const toast = useToast();
   const { colorMode, toggleColorMode } = useColorMode();
+  const colorIcon = useColorModeValue(<MoonIcon />, <SunIcon />);
   const bg = useColorModeValue("#fff", "#23272A");
   const dispatch = useDispatch();
   const {
@@ -296,7 +297,7 @@ function Chat() {
                 isRound
                 onClick={toggleColorMode}
                 _focus={{ boxShadow: "none" }}
-                icon={<SunIcon />}
+                icon={colorIcon}
               />
 
               <IconButton
