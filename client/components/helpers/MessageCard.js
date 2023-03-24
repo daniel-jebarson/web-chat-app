@@ -160,6 +160,7 @@ export default function (props) {
             flexDirection={props.isUser ? "row-reverse" : "row"}
             bgColor={props.isUser ? userbg : friendbg}
             cursor="pointer"
+            borderRadius={"lg"}
             key={props.id}
             _hover={{ bgColor: props.isUser ? userhoverbg : friendhoverbg }}
             // mr={"30%"}
@@ -173,6 +174,7 @@ export default function (props) {
             <Flex
               flexGrow="1"
               flexDirection={"column"}
+              borderRadius={"lg"}
               justifyContent={"center"}
             >
               <Flex
@@ -225,7 +227,7 @@ export default function (props) {
                     textAlign={props.isUser ? "right" : "left"}
                     wordBreak={"break-word"}
                     px={"4"}
-                    py={"2.5"}
+                    py={"1.5"}
                     color={color}
                   >
                     {text}
@@ -235,6 +237,7 @@ export default function (props) {
               <Flex
                 minHeight="2"
                 px={"3.5"}
+                borderRadius={"lg"}
                 flexDirection={props.isUser ? "row" : "row-reverse"}
               >
                 <Text

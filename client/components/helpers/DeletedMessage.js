@@ -77,7 +77,7 @@ export default function ({ props }) {
               {/* {props.time} */}
             </Text>
           </Flex>
-          <Flex ml={"5"} pt={"4"}>
+          <Flex ml={"5"}>
             <Icon mr={"3"} as={AiOutlineStop} w={5} h={5} color={"red.500"} />
             <Text color={"red.500"}>This message was deleted</Text>
           </Flex>
