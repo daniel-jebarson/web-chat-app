@@ -8,6 +8,8 @@ import {
   Icon,
   Spinner,
   useToast,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import MessageBox from "../components/core/MessageBox";
 import Navbar from "../components/core/Navbar";
@@ -36,7 +38,8 @@ var selectedChat = {
 
 function Chat() {
   const toast = useToast();
-
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue("#fff", "#23272A");
   const dispatch = useDispatch();
   const {
     SETCHAT,
@@ -111,6 +114,7 @@ function Chat() {
       SETFRIENDS(data, d.username);
       // console.log(data);
     } catch (err) {
+      console.log(err);
       toast({
         title: "Failed to fetch chats!",
         description: err.response.data.msg,
@@ -152,9 +156,8 @@ function Chat() {
       return;
     } else {
       SETUSER(data);
+      fetchChatList(data);
     }
-
-    fetchChatList(data);
   }, []);
 
   useEffect(() => {
@@ -278,14 +281,17 @@ function Chat() {
             p={4}
             h={"81px"}
             borderBottom="1px solid"
-            bgColor={"#23272A"}
-            borderRight={"1px solid #2D3748"}
+            bgColor={colorMode == "light" ? "#fff" : "#171c1f"}
+            borderRight={`1px solid ${
+              colorMode == "light" ? "#c3cfd7" : "#2D3748"
+            } `}
           >
             <PorfileView username={userData.username} gmail={userData.gmail} />
             <Stack isInline>
               <IconButton
                 size="sm"
                 isRound
+                onClick={toggleColorMode}
                 _focus={{ boxShadow: "none" }}
                 icon={<SunIcon />}
               />
@@ -303,7 +309,7 @@ function Chat() {
             direction="column"
             borderRight="1px solid"
             borderColor={"gray.700"}
-            bg={"#1b1e20"}
+            bg={colorMode == "light" ? "#eff5f5" : "#1b1e20"}
             flex="1"
           >
             <Flex direction="column" p={4}>
@@ -340,7 +346,7 @@ function Chat() {
         p="0"
         m="0"
         flexDir={"column"}
-        bgColor={"#23272A"}
+        bgColor={colorMode == "light" ? "#fff" : "#23272A"}
         height="100vh"
         flexGrow={"1"}
       >
@@ -355,7 +361,7 @@ function Chat() {
               id={chatData.id}
             />
             <Box
-              bgColor={"#23272A"}
+              bgColor={bg}
               overflowY="scroll"
               height={"80vh"}
               mb={"4"}

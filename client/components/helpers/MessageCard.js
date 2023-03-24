@@ -6,6 +6,7 @@ import {
   IconButton,
   Input,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { Fragment, useState, useEffect } from "react";
 import { TbEdit } from "react-icons/tb";
@@ -21,6 +22,12 @@ export default function (props) {
   const dispatch = useDispatch();
   const [text, setText] = useState(props.message);
   const [updated, setUpdated] = useState(props.updated);
+  const color = useColorModeValue("#000", "#fff");
+  const userbg = useColorModeValue("#cfc9c9", "#1c2c3c");
+  const userhoverbg = useColorModeValue("#bbb9b9", "#2a3a49");
+  const friendhoverbg = useColorModeValue("#8fa4b1", "#09090b");
+  const friendbg = useColorModeValue("#a0b7c7", "#161512");
+  // const deletedbg = useColorModeValue("#000", "#000");
   const { EDITMESSAGE, DELETEMESSAGE } = bindActionCreators(
     actionCreators,
     dispatch
@@ -151,10 +158,10 @@ export default function (props) {
             ml={"2"}
             height="fit-content"
             flexDirection={props.isUser ? "row-reverse" : "row"}
-            bgColor={props.isUser ? "#1c2c3c" : "#23272A"}
+            bgColor={props.isUser ? userbg : friendbg}
             cursor="pointer"
             key={props.id}
-            _hover={{ bgColor: props.isUser ? "#2a3a49" : "#2a2c2d" }}
+            _hover={{ bgColor: props.isUser ? userhoverbg : friendhoverbg }}
             // mr={"30%"}
           >
             <Avatar
@@ -181,7 +188,7 @@ export default function (props) {
                   fontSize={"xl"}
                   position={"relative"}
                   top={"-2"}
-                  color="whiteAlpha.700"
+                  color={color}
                 >
                   {props.name.slice(0, 25) === props.name
                     ? props.name
@@ -191,7 +198,7 @@ export default function (props) {
                   fontSize={"12"}
                   position={"relative"}
                   top={"0"}
-                  color={"white"}
+                  color={color}
                 >
                   {new Date(props.time).toLocaleString()}
                   {/* {props.time} */}
@@ -206,7 +213,7 @@ export default function (props) {
                     px={"4"}
                     onChange={(e) => setText(e.target.value)}
                     py={"2.5"}
-                    color={"white"}
+                    color={color}
                     onKeyPress={(e) => {
                       if (e.key == "Enter") {
                         handleEdit(e); // props.message = "dani";
@@ -219,7 +226,7 @@ export default function (props) {
                     wordBreak={"break-word"}
                     px={"4"}
                     py={"2.5"}
-                    color={"white"}
+                    color={color}
                   >
                     {text}
                   </Text>
@@ -231,7 +238,7 @@ export default function (props) {
                 flexDirection={props.isUser ? "row" : "row-reverse"}
               >
                 <Text
-                  color={"white"}
+                  color={color}
                   fontSize="11"
                   position={"relative"}
                   right="1"
@@ -243,7 +250,7 @@ export default function (props) {
                   <Box>
                     <IconButton
                       variant="link"
-                      color={"white"}
+                      color={color}
                       size={"lg"}
                       onClick={() => setEditing(true)}
                       icon={<TbEdit />}
@@ -251,7 +258,7 @@ export default function (props) {
                     <IconButton
                       variant="link"
                       onClick={() => handleDelete()}
-                      color={"white"}
+                      color={color}
                       size={"lg"}
                       icon={<MdDelete />}
                     />

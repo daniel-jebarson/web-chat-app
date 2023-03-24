@@ -1,12 +1,20 @@
 import React from "react";
 import { bindActionCreators } from "redux";
-import { Container, Avatar, Flex, Text, useToast } from "@chakra-ui/react";
+import {
+  Container,
+  Avatar,
+  Flex,
+  Text,
+  useToast,
+  useColorMode,
+} from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../../hooks";
 import Axios from "axios";
 function UserCard({ gmail, username, data: user_Data, socket }) {
   const toast = useToast();
   const dispatch = useDispatch();
+  const { colorMode, toggleColorMode } = useColorMode();
   const { ADDFRIEND } = bindActionCreators(actionCreators, dispatch);
 
   const getFriendId = async (data, user) => {
@@ -75,9 +83,10 @@ function UserCard({ gmail, username, data: user_Data, socket }) {
       p={"3"}
       alignItems={"center"}
       gap={"3.5"}
+      cursor={"pointer"}
       flexDirection="row"
       onClick={addFriend}
-      _hover={{ bgColor: "whitesmoke" }}
+      _hover={{ bgColor: `${colorMode == "dark" ? "#8e9090" : "whitesmoke"}` }}
     >
       <Avatar
         size="md"

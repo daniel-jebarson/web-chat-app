@@ -24,11 +24,14 @@ import {
   Tbody,
   keyframes,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Axios from "axios";
 import { ImStatsDots } from "react-icons/im";
 export default function StatisticsView({ chatId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const color = useColorModeValue("#000", "#fff");
+
   const [output, setOutput] = useState("");
   const toast = useToast();
   const getStatistics = async (id) => {
@@ -72,7 +75,7 @@ export default function StatisticsView({ chatId }) {
       <Tooltip placement="right-end" hasArrow label="Statistics View">
         <IconButton
           variant={"link"}
-          color="white"
+          color={color}
           size={"md"}
           onClick={() => getStatistics(chatId)}
           icon={<ImStatsDots />}

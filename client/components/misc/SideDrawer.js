@@ -17,6 +17,7 @@ import {
   Tooltip,
   useToast,
   Stack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import UserCard from "../helpers/UserCard";
 import Axios from "axios";
@@ -24,6 +25,9 @@ import { useSelector } from "react-redux";
 
 function SideDrawer(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const color = useColorModeValue("blackAlpha", "#fff");
+  const bg = useColorModeValue("#f7fff3", "#282727");
+
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const [user, setUser] = useState("");
@@ -94,11 +98,12 @@ function SideDrawer(props) {
       >
         <Button
           onClick={onOpen}
+          bg={bg}
           _focus={{ boxShadow: "none" }}
           letterSpacing="wide"
           textTransform="uppercase"
           fontSize="md"
-          leftIcon={<AddIcon color={"blackAlpha.500"} />}
+          leftIcon={<AddIcon color={color} />}
         >
           New Chat
         </Button>

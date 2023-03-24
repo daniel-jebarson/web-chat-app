@@ -8,9 +8,15 @@ import {
   Input,
   useToast,
   Icon,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { AiOutlineStop } from "react-icons/ai";
 export default function ({ props }) {
+  const color = useColorModeValue("#000", "#fff");
+  const userbg = useColorModeValue("#cfc9c9", "#1c2c3c");
+  const userhoverbg = useColorModeValue("#bbb9b9", "#2a3a49");
+  const friendhoverbg = useColorModeValue("#8fa4b1", "#09090b");
+  const friendbg = useColorModeValue("#a0b7c7", "#161512");
   return (
     <Flex
       key={props.id}
@@ -28,14 +34,14 @@ export default function ({ props }) {
         ml={"2"}
         height="fit-content"
         flexDirection={props.isUser ? "row-reverse" : "row"}
-        bgColor={props.isUser ? "#1c2c3c" : "#23272A"}
+        bgColor={props.isUser ? userbg : friendbg}
         cursor="pointer"
         key={props.id}
-        _hover={{ bgColor: props.isUser ? "#2a3a49" : "#2a2c2d" }}
+        borderRadius={"lg"}
+        _hover={{ bgColor: props.isUser ? userhoverbg : friendhoverbg }}
         // mr={"30%"}
       >
         <Avatar
-          
           mt={"3"}
           size="md"
           name={props.name}

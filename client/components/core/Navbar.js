@@ -20,6 +20,7 @@ import {
   useToast,
   useDisclosure,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Axios from "axios";
 import StatisticsView from "../views/StatisticsView";
@@ -29,7 +30,7 @@ function Navbar(props) {
   const spin = keyframes`
   from { transform: rotate(0deg); }
   to { transform: rotate(5400deg); }`;
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const color = useColorModeValue("#000", "#fff");
   const prefersReducedMotion = usePrefersReducedMotion();
   const toast = useToast();
   const animation = prefersReducedMotion
@@ -100,9 +101,9 @@ function Navbar(props) {
       px={"10"}
       pt="5"
     >
-      <AtSignIcon boxSize={"5"} color="whiteAlpha.500" />
+      <AtSignIcon boxSize={"5"} color={color} />
       <Text
-        color={"white"}
+        color={color}
         fontSize="20"
         fontWeight={"semibold"}
         fontStyle="oblique"
@@ -115,14 +116,14 @@ function Navbar(props) {
       <StatisticsView chatId={props.id} />
       <IconButton
         variant="link"
-        color={"white"}
+        color={color}
         size={"lg"}
         onClick={removeFriend}
         icon={<MdPersonRemoveAlt1 />}
       />
       <IconButton
         variant="link"
-        color={"white"}
+        color={color}
         size={"lg"}
         icon={<FiHelpCircle />}
         onClick={() => {
@@ -132,7 +133,7 @@ function Navbar(props) {
       />
       <IconButton
         variant="link"
-        color={"white"}
+        color={color}
         size={"lg"}
         icon={<AiOutlineSync />}
         _focus={{ animation: animation }}

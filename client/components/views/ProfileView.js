@@ -14,8 +14,12 @@ import {
   Text,
   Flex,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 export default function ProfileView({ username, gmail }) {
+  const color = useColorModeValue("#3b3838", "#a49e9e");
+  const headcolor = useColorModeValue("#3a3838", "#fff");
+  const bgcolor = useColorModeValue("#fff", "#1b1e20");
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -31,9 +35,9 @@ export default function ProfileView({ username, gmail }) {
       </Tooltip>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent bgColor={"#1b1e20"}>
+        <ModalContent bgColor={bgcolor}>
           <ModalHeader
-            color={"whiteAlpha.300"}
+            color={headcolor}
             fontSize={"3xl"}
             textTransform={"uppercase"}
             fontWeight={"extrabold"}
@@ -53,11 +57,12 @@ export default function ProfileView({ username, gmail }) {
                 name={username}
                 src={`https://avatars.dicebear.com/api/bottts/${username}.svg`}
               />
-              <Flex flexDirection={"column"} color={"white"}>
+              <Flex flexDirection={"column"} color={color}>
                 <Text
                   fontSize={"3xl"}
                   fontStyle={"oblique"}
                   fontWeight={"bold"}
+                  wordBreak={"break-all"}
                 >
                   {username}
                 </Text>
@@ -65,6 +70,7 @@ export default function ProfileView({ username, gmail }) {
                   fontSize={"16"}
                   fontWeight={"semibold"}
                   fontStyle={"italic"}
+                  wordBreak={"break-all"}
                 >
                   {gmail}
                 </Text>

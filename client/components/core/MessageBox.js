@@ -5,6 +5,7 @@ import {
   IconButton,
   Input,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiSend } from "react-icons/bi";
@@ -16,6 +17,9 @@ import Axios from "axios";
 // import { socket } from "../../util/socket";
 function MessageBox({ socket }) {
   const dispatch = useDispatch();
+  const color = useColorModeValue("#fff", "#000");
+  const bg = useColorModeValue("#000", "#fff");
+  const bgBox = useColorModeValue("#383737", "#d8d8d8");
   const toast = useToast();
   const { SETCHAT, ADDMESSAGE } = bindActionCreators(actionCreators, dispatch);
   const [search, setSearch] = useState("");
@@ -69,7 +73,7 @@ function MessageBox({ socket }) {
     // socket.emit("check");
   };
   return (
-    <Flex flexGrow={"1"} color="white">
+    <Flex flexGrow={"1"} color={bg}>
       <InputGroup mx={"5"}>
         <Input
           type="text"
@@ -77,9 +81,10 @@ function MessageBox({ socket }) {
           onKeyPress={handleEnter}
           value={search}
           placeholder="Enter the message here"
-          color="white"
+          _placeholder={{ color: color }}
+          color={color}
           pl="5"
-          bgColor={"#353636"}
+          bgColor={bgBox}
           border={"none"}
           boxShadow="dark-lg"
           rounded="md"
@@ -87,9 +92,9 @@ function MessageBox({ socket }) {
         />
         <InputRightElement>
           <IconButton
-            mr={"0.5"}
-            mt="0.5"
-            size="md"
+            ml={"1.5"}
+            mb="1"
+            size="sm"
             colorScheme="green"
             aria-label="Get request"
             onClick={handleMessage}
