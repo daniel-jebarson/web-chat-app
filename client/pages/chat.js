@@ -263,10 +263,10 @@ function Chat() {
 
   return (
     <Flex m={"0"} p="0" flexDirection={"row"}>
-      <HeaderMeta
+      {/* <HeaderMeta
         content={"You can chat here with your friends and create friends"}
         title={"Chat for Web Chat App"}
-      />
+      /> */}
       <Box maxW="fit-content" p="0" m="0">
         <Flex
           direction="column"

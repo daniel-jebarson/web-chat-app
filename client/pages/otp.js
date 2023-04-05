@@ -15,6 +15,7 @@ import {
   InputRightElement,
   useToast,
 } from "@chakra-ui/react";
+import { NextSeo } from "next-seo";
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 import Axios from "axios";
@@ -85,82 +86,89 @@ const OTP = () => {
   };
 
   return (
-    <Flex
-      flexDirection="column"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <HeaderMeta
-        content={"OTP to activate the account in Web Chat App"}
-        title={"OTP for the Web Chat App"}
+    <>
+      {" "}
+      <NextSeo
+        description={"OTP to activate the account in Web Chat App"}
+        title={"WebChatApp - OTP"}
       />
-      <Stack
-        flexDir="column"
-        mb="2"
+      <Flex
+        flexDirection="column"
+        height="100vh"
+        backgroundColor="gray.200"
         justifyContent="center"
         alignItems="center"
-        pt={"10"}
-        bgColor={"whiteAlpha.900"}
       >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Verify the link</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
-            <Stack
-              spacing={4}
-              px="1rem"
-              py={"2rem"}
-              backgroundColor="whiteAlpha.900"
-              boxShadow="md"
-            >
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<EmailIcon color="gray.500" />}
-                  />
-                  <Input
-                    type="email"
-                    value={userData.gmail}
-                    disabled
-                    placeholder="email address"
-                    required
-                  />
-                </InputGroup>
-                {timeLeft == 0 ? (
-                  <FormHelperText pl={"2"} color={"green"}>
-                    Click the below button to resend link
-                  </FormHelperText>
-                ) : (
-                  <FormHelperText pl={"2"} color={"red"}>
-                    You can resend link in {timeLeft} secs
-                  </FormHelperText>
-                )}
-              </FormControl>
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="teal"
-                width="full"
-                isLoading={timeLeft !== 0}
-                onClick={sendOtp}
+        {/* <HeaderMeta
+        content={"OTP to activate the account in Web Chat App"}
+        title={"OTP for the Web Chat App"}
+      /> */}
+        <Stack
+          flexDir="column"
+          mb="2"
+          justifyContent="center"
+          alignItems="center"
+          pt={"10"}
+          bgColor={"whiteAlpha.900"}
+        >
+          <Avatar bg="teal.500" />
+          <Heading color="teal.400">Verify the link</Heading>
+          <Box minW={{ base: "90%", md: "468px" }}>
+            <form>
+              <Stack
+                spacing={4}
+                px="1rem"
+                py={"2rem"}
+                backgroundColor="whiteAlpha.900"
+                boxShadow="md"
               >
-                Send Link
-              </Button>
-            </Stack>
-          </form>
+                <FormControl>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<EmailIcon color="gray.500" />}
+                    />
+                    <Input
+                      type="email"
+                      value={userData.gmail}
+                      disabled
+                      placeholder="email address"
+                      required
+                    />
+                  </InputGroup>
+                  {timeLeft == 0 ? (
+                    <FormHelperText pl={"2"} color={"green"}>
+                      Click the below button to resend link
+                    </FormHelperText>
+                  ) : (
+                    <FormHelperText pl={"2"} color={"red"}>
+                      You can resend link in {timeLeft} secs
+                    </FormHelperText>
+                  )}
+                </FormControl>
+                <Button
+                  borderRadius={0}
+                  type="submit"
+                  variant="solid"
+                  colorScheme="teal"
+                  width="full"
+                  isLoading={timeLeft !== 0}
+                  onClick={sendOtp}
+                >
+                  Send Link
+                </Button>
+              </Stack>
+            </form>
+          </Box>
+        </Stack>
+        <Box>
+          Verified already?{" "}
+          <Link color="teal.500" href="/">
+            Sign in
+          </Link>
         </Box>
-      </Stack>
-      <Box>
-        Verified already?{" "}
-        <Link color="teal.500" href="/">
-          Sign in
-        </Link>
-      </Box>
-    </Flex>
+      </Flex>
+    </>
   );
 };
 
