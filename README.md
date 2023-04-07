@@ -75,16 +75,14 @@ If you think that this app helped you in studies or gave new ideas please give y
 
 First, clone the repo 
 
-```bash
+```bash 
+cd web-chat-app
 yarn global add concurrently
 
-cd client
-yarn 
+#then install packages and build it
+yarn run build
 
-cd server
-yarn
-
-#then
+#then run the app
 yarn run dev
 ```
 
