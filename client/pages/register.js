@@ -15,6 +15,7 @@ import {
   InputRightElement,
   Icon,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
@@ -22,7 +23,11 @@ import HeaderMeta from "../components/meta/HeaderMeta";
 import { NextSeo } from "next-seo";
 import Axios from "axios";
 import { useEffect } from "react";
+import ColorChange from "../layout/ColorChange";
 const Register = () => {
+  const color = useColorModeValue("#000", "#fff");
+  const bg = useColorModeValue("gray.200", "#2e2b2b");
+  const profileColor = useColorModeValue("whiteAlpha.900", "#292626");
   const toast = useToast();
   const [pass, setPass] = useState("");
   const [cpass, setcPass] = useState("");
@@ -33,10 +38,6 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   const handleShowCClick = () => setShowCPassword(!showCPassword);
-  // const postDetails = (img) => {
-  //   setLoading(true);
-  //   // if(img===undefined)
-  // };
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("userInfo"));
@@ -99,16 +100,18 @@ const Register = () => {
   };
 
   return (
-    <>
+    <ColorChange>
       {" "}
       <NextSeo
         description={"Register to create the account in Web Chat App"}
         title={"WebChatApp - Register"}
       />
       <Flex
+        color={color}
+        bgColor={bg}
+        width={"full"}
         flexDirection="column"
         height="100vh"
-        backgroundColor="gray.200"
         justifyContent="center"
         alignItems="center"
       >
@@ -122,7 +125,7 @@ const Register = () => {
           justifyContent="center"
           alignItems="center"
           pt={"10"}
-          bgColor={"whiteAlpha.900"}
+          bgColor={profileColor}
         >
           <Avatar bg="teal.500" />
           <Heading color="teal.400">Welcome</Heading>
@@ -132,8 +135,8 @@ const Register = () => {
                 spacing={4}
                 px="1rem"
                 py={"2rem"}
-                backgroundColor="whiteAlpha.900"
                 boxShadow="md"
+                bgColor={profileColor}
               >
                 <FormControl>
                   <InputGroup>
@@ -211,14 +214,6 @@ const Register = () => {
                     </InputRightElement>
                   </InputGroup>
                 </FormControl>
-                {/* <FormControl>
-                <Input
-                  type="file"
-                  p={1.5}
-                  accept="image/*"
-                  onChange={(e) => postDetails(e.target.files[0])}
-                />
-              </FormControl> */}
 
                 <Button
                   borderRadius={0}
@@ -241,7 +236,7 @@ const Register = () => {
           </Link>
         </Box>
       </Flex>
-    </>
+    </ColorChange>
   );
 };
 

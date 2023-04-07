@@ -248,7 +248,8 @@ function Chat() {
   });
 
   const logOut = async () => {
-    localStorage.clear();
+    // localStorage.clear();
+    localStorage.removeItem("userInfo");
     toast({
       title: "Logging out ...",
       description: "Logged out successfully!",

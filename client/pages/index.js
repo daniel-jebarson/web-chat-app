@@ -15,13 +15,18 @@ import {
   FormHelperText,
   InputRightElement,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import HeaderMeta from "../components/meta/HeaderMeta";
+import ColorChange from "../layout/ColorChange";
 import { useEffect } from "react";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
 import Axios from "axios";
 import { NextSeo } from "next-seo";
 const Home = () => {
+  const color = useColorModeValue("#000", "#fff");
+  const bg = useColorModeValue("gray.200", "#2e2b2b");
+  const profileColor = useColorModeValue("whiteAlpha.900", "#292626");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -69,7 +74,6 @@ const Home = () => {
         position: "bottom",
       });
       // console.log(data);
-
       await sleep(3000);
       setLoading(false);
       window.location.href = "./chat";
@@ -88,15 +92,17 @@ const Home = () => {
   };
 
   return (
-    <>
+    <ColorChange>
       <NextSeo
         title="WebChatApp - Login"
         description="Login in to the web chat app to start messaging to others"
       />
       <Flex
+        color={color}
+        bgColor={bg}
+        width={"full"}
         flexDirection="column"
         height="100vh"
-        backgroundColor="gray.200"
         justifyContent="center"
         alignItems="center"
       >
@@ -110,7 +116,7 @@ const Home = () => {
           justifyContent="center"
           alignItems="center"
           pt={"10"}
-          bgColor={"whiteAlpha.900"}
+          bgColor={profileColor}
         >
           <Avatar bg="teal.500" />
           <Heading color="teal.400">Welcome</Heading>
@@ -120,7 +126,7 @@ const Home = () => {
                 spacing={4}
                 px="1rem"
                 py={"2rem"}
-                backgroundColor="whiteAlpha.900"
+                bgColor={profileColor}
                 boxShadow="md"
               >
                 <FormControl>
@@ -161,7 +167,7 @@ const Home = () => {
                     </InputRightElement>
                   </InputGroup>
                   <FormHelperText textAlign="right">
-                    <Link>forgot password?</Link>
+                    <Link color={"red.400"}>forgot password?</Link>
                   </FormHelperText>
                 </FormControl>
                 <Button
@@ -185,7 +191,7 @@ const Home = () => {
           </Link>
         </Box>
       </Flex>
-    </>
+    </ColorChange>
   );
 };
 

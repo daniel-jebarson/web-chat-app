@@ -14,7 +14,9 @@ import {
   FormHelperText,
   InputRightElement,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import ColorChange from "../layout/ColorChange";
 import { NextSeo } from "next-seo";
 import { FaRegUser } from "react-icons/fa";
 import { EmailIcon, ViewIcon, ViewOffIcon, LockIcon } from "@chakra-ui/icons";
@@ -24,11 +26,14 @@ import HeaderMeta from "../components/meta/HeaderMeta";
 import React, { useState, useEffect } from "react";
 const OTP = () => {
   const [userData, setUserData] = useState({});
+  const color = useColorModeValue("#000", "#fff");
+  const bg = useColorModeValue("gray.200", "#2e2b2b");
+  const profileColor = useColorModeValue("whiteAlpha.900", "#292626");
   const [timeLeft, setTimeLeft] = useState(0);
   const toast = useToast();
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("userInfo"));
-    if (Object.keys(data).length == 0) {
+    if (data == null || Object.keys(data).length == 0) {
       window.location.href = "./";
     } else if (data.verified) {
       window.location.href = "./chat";
@@ -44,7 +49,6 @@ const OTP = () => {
     while (time !== 0) {
       await sleep(1000);
       setTimeLeft(--time);
-      // console.log(time);
     }
   };
 
@@ -86,7 +90,7 @@ const OTP = () => {
   };
 
   return (
-    <>
+    <ColorChange>
       {" "}
       <NextSeo
         description={"OTP to activate the account in Web Chat App"}
@@ -95,9 +99,11 @@ const OTP = () => {
       <Flex
         flexDirection="column"
         height="100vh"
-        backgroundColor="gray.200"
         justifyContent="center"
         alignItems="center"
+        color={color}
+        bgColor={bg}
+        width={"full"}
       >
         {/* <HeaderMeta
         content={"OTP to activate the account in Web Chat App"}
@@ -109,7 +115,7 @@ const OTP = () => {
           justifyContent="center"
           alignItems="center"
           pt={"10"}
-          bgColor={"whiteAlpha.900"}
+          bgColor={profileColor}
         >
           <Avatar bg="teal.500" />
           <Heading color="teal.400">Verify the link</Heading>
@@ -119,7 +125,7 @@ const OTP = () => {
                 spacing={4}
                 px="1rem"
                 py={"2rem"}
-                backgroundColor="whiteAlpha.900"
+                bgColor={profileColor}
                 boxShadow="md"
               >
                 <FormControl>
@@ -168,7 +174,7 @@ const OTP = () => {
           </Link>
         </Box>
       </Flex>
-    </>
+    </ColorChange>
   );
 };
 
