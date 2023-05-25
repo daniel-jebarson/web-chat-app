@@ -3,6 +3,8 @@ import { Provider } from "react-redux";
 import { store } from "../hooks/index";
 import { ChakraProvider } from "@chakra-ui/react";
 import { DefaultSeo } from "next-seo";
+import { Analytics } from "@vercel/analytics/react";
+
 function App({ Component, pageProps }) {
   return (
     <React.Fragment>
@@ -64,6 +66,14 @@ function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </ChakraProvider>
       </Provider>
+      <Analytics
+        beforeSend={(event) => {
+          if (event.url.includes("localhost")) {
+            return null;
+          }
+          return event;
+        }}
+      />
     </React.Fragment>
   );
 }
