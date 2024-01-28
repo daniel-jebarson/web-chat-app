@@ -91,7 +91,7 @@ function UserCard({ gmail, username, data: user_Data, socket }) {
       <Avatar
         size="md"
         name="dani"
-        src={`https://avatars.dicebear.com/api/bottts/${username}.svg`}
+        src={`https://api.dicebear.com/7.x/bottts/svg?seed=${username}`}
       />
 
       <Flex flexDirection={"column"} gap={"2"}>

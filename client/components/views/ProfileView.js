@@ -27,10 +27,7 @@ export default function ProfileView({ username, gmail }) {
         <Avatar
           cursor={"pointer"}
           onClick={onOpen}
-          src={
-            `https://avatars.dicebear.com/api/bottts/${username}.svg`
-            // "https://lh3.googleusercontent.com/a/AEdFTp7kiDrC2tOsV1S8_g-WJXQlmhRAFFZCYskUxGsYFA=s96-c"
-          }
+          src={`https://api.dicebear.com/7.x/bottts/svg?seed=${username}`}
         />
       </Tooltip>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -55,7 +52,7 @@ export default function ProfileView({ username, gmail }) {
               <Avatar
                 size="xl"
                 name={username}
-                src={`https://avatars.dicebear.com/api/bottts/${username}.svg`}
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${username}`}
               />
               <Flex flexDirection={"column"} color={color}>
                 <Text
