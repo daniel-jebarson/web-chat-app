@@ -12,10 +12,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-function chatLoader({number}) {
+function chatLoader({ number }) {
   return (
     <Stack mt={"3"}>
-      {Array(number||5 )
+      {Array(number || 5)
         .fill("_")
         .map((_) => {
           return (
@@ -30,7 +30,7 @@ function chatLoader({number}) {
                 <Avatar
                   size="md"
                   name="dani"
-                  src={`https://avatars.dicebear.com/api/bottts/dani.svg`}
+                  src={`https://api.dicebear.com/7.x/bottts/svg?seed=dani`}
                 />
               </SkeletonCircle>
               <Flex flexDirection={"column"} gap={"3"}>

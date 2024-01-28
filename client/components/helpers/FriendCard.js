@@ -28,7 +28,7 @@ export default function (props) {
       <Avatar
         size="md"
         name={props.name}
-        src={`https://avatars.dicebear.com/api/bottts/${props.name}.svg`}
+        src={`https://api.dicebear.com/7.x/bottts/svg?seed=${props.name}`}
       />
       <Text fontWeight={"bold"} fontSize={"2xl"} color={color}>
         {props.name.slice(0, 25) === props.name

@@ -45,7 +45,7 @@ export default function ({ props }) {
           mt={"3"}
           size="md"
           name={props.name}
-          src={`https://avatars.dicebear.com/api/bottts/${props.name}.svg`}
+          src={`https://api.dicebear.com/7.x/bottts/svg?seed=${props.name}`}
         />
         <Flex flexGrow="1" flexDirection={"column"} justifyContent={"center"}>
           <Flex
